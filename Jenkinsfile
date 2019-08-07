@@ -14,11 +14,13 @@ pipeline {
           echo(machines_json)
           echo(devices_json)
 
+          echo('trying to lock a Windows10 resource')
           lock(label:'Windows10', quantity: 1, variable:'vmid') {
-            lock(label:'Levi', quantity: 1, variable:'devid') {
-              echo 'using vm: '+env.vmid
-              echo 'using device: '+env.devid
-            }
+            echo 'using vm: '+env.vmid
+            // lock(label:'Levi', quantity: 1, variable:'devid') {
+            //   echo 'using vm: '+env.vmid
+            //   echo 'using device: '+env.devid
+            // }
           }
 
           echo "test"
