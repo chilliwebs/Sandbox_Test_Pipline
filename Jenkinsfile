@@ -17,10 +17,11 @@ pipeline {
           echo('trying to lock a Windows10 resource')
           lock(label:'Windows10', quantity: 1, variable:'vmid') {
             echo 'using vm: '+env.vmid
-            // lock(label:'Levi', quantity: 1, variable:'devid') {
-            //   echo 'using vm: '+env.vmid
-            //   echo 'using device: '+env.devid
-            // }
+            sleep 2
+            lock(label:'Levi', quantity: 1, variable:'devid') {
+              echo 'using device: '+env.devid
+              sleep 2
+            }
           }
 
           echo "test"
