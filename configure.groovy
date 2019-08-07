@@ -13,8 +13,8 @@ def test(){return this.common.test()}
 
 //---------------
 
-def machine_groups = (new groovy.json.JsonSlurper()).parseText(this.machines_json)
-def devices = (new groovy.json.JsonSlurper()).parseText(this.devices_json)
+this.machine_groups = (new groovy.json.JsonSlurper()).parseText(this.machines_json)
+this.devices = (new groovy.json.JsonSlurper()).parseText(this.devices_json)
 
 echo(machine_groups.toString())
 echo(devices.toString())
@@ -24,7 +24,7 @@ lock(label:'Windows10', quantity: 1, variable:'vmid') {
     echo('using vm: '+env.vmid)
     lock(label:'Levi', quantity: 1, variable:'devid') {
         echo('using device: '+env.devid)
-        echo(machine_groups[env.vmid].toString())
-        echo(devices[env.devid].toString())
+        echo(this.machine_groups[env.vmid].toString())
+        echo(this.devices[env.devid].toString())
     }
 }
