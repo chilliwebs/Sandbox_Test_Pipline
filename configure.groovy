@@ -19,10 +19,11 @@ def configure() {
             def device = new HashMap<>((new groovy.json.JsonSlurper()).parseText(this.devices_json)[env.devid])
             restore_snapshot(machine.vmxurl, machine.snapshot)
             start_vm(machine.vmxurl)
-            def ipaddr = get_vm_ipaddr(machine.vmxurl)
-            echo(ipaddr)
-            run_script_on_vm('vmuser', 'password', machine.vmxurl, "", "powershell -Command \"Invoke-WebRequest http://172.17.0.1:8080/jnlpJars/agent.jar -OutFile C:\\Users\\vmuser\\Desktop\\agent.jar\"")
-            run_script_on_vm('vmuser', 'password', machine.vmxurl, "", "java -Dhudson.util.ProcessTree.disable=true -jar \"C:\\Users\\vmuser\\Desktop\\agent.jar\" -jnlpUrl http://172.17.0.1:8080/computer/W10HS_1/slave-agent.jnlp -secret 9047c64d32bfa07e89bf14245bcb6a1023ee4f6942f4a5b597d6b7a244bf9b3f -workDir \"C:\\User\\vmuser\"", false)
+            def vmIP = get_vm_ipaddr(machine.vmxurl)
+            def masterIP = InetAddress.localHost.hostAddress
+            echo(masterIP)
+            run_script_on_vm('vmuser', 'password', machine.vmxurl, "", "powershell -Command \"Invoke-WebRequest http://${masterIP}:8080/jnlpJars/agent.jar -OutFile C:\\Users\\vmuser\\Desktop\\agent.jar\"")
+            run_script_on_vm('vmuser', 'password', machine.vmxurl, "", "java -Dhudson.util.ProcessTree.disable=true -jar \"C:\\Users\\vmuser\\Desktop\\agent.jar\" -jnlpUrl http://${masterIP}:8080/computer/W10HS_1/slave-agent.jnlp -secret 9047c64d32bfa07e89bf14245bcb6a1023ee4f6942f4a5b597d6b7a244bf9b3f -workDir \"C:\\User\\vmuser\"", false)
             node(machine.name) {
                 echo('were in!')
                 bat 'shutdown /s /f /t 0'
