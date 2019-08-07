@@ -11,8 +11,8 @@ this.devices_json = dir('/var/jenkins_home/workspace/crohub_Managment_Pipeline_m
 this.common = evaluate readFile('common.groovy')
 def test(){return this.common.test()}
 
-def get_machine_info(vmid){return (new groovy.json.JsonSlurper()).parseText(this.machines_json)[vmid])}
-def get_device_info(devid){return (new groovy.json.JsonSlurper()).parseText(this.devices_json)[devid])}
+def get_machine_info(vmid){return (new groovy.json.JsonSlurper()).parseText(this.machines_json)[vmid]}
+def get_device_info(devid){return (new groovy.json.JsonSlurper()).parseText(this.devices_json)[devid]}
 //---------------
 
 echo('trying to lock a Windows10 resource')
