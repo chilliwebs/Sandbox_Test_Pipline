@@ -22,6 +22,7 @@ lock(label:'Windows10', quantity: 1, variable:'vmid') {
         echo(jenkins.model.jenkins.getInstance().getComputer(machine.name).getJnlpMac())
         //restore_snapshot(machine.vmxurl, machine.snapshot)
         //start_vm(machine.vmxurl)
+        //sudo vmrun getGuestIPAddress /home/vmuser/vmware/W10HS_1/W10HS_1.vmx -wait
         //sudo vmrun -gu vmuser -gp password runScriptInGuest /home/vmuser/vmware/W10HS_1/W10HS_1.vmx "" "powershell -Command \"Invoke-WebRequest http://172.17.0.1:8080/jnlpJars/agent.jar -OutFile C:\\Users\\vmuser\\Desktop\\agent.jar\""
     }
 }
