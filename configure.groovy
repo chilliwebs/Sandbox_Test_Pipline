@@ -13,16 +13,19 @@ def get_machine_info(vmid){return (new groovy.json.JsonSlurper()).parseText(this
 def get_device_info(devid){return (new groovy.json.JsonSlurper()).parseText(this.devices_json)[devid]}
 //---------------
 
-echo('trying to lock a Windows10 resource')
-lock(label:'Windows10', quantity: 1, variable:'vmid') {
-    echo('using vm: '+env.vmid)
-    def machine = get_machine_info(env.vmid)
-    lock(label:'Levi', quantity: 1, variable:'devid') {
-        echo('using device: '+env.devid)
-        echo(jenkins.model.jenkins.getInstance().getComputer(machine.name).getJnlpMac())
-        //restore_snapshot(machine.vmxurl, machine.snapshot)
-        //start_vm(machine.vmxurl)
-        //sudo vmrun getGuestIPAddress /home/vmuser/vmware/W10HS_1/W10HS_1.vmx -wait
-        //sudo vmrun -gu vmuser -gp password runScriptInGuest /home/vmuser/vmware/W10HS_1/W10HS_1.vmx "" "powershell -Command \"Invoke-WebRequest http://172.17.0.1:8080/jnlpJars/agent.jar -OutFile C:\\Users\\vmuser\\Desktop\\agent.jar\""
+def configure() {
+    echo('trying to lock a Windows10 resource')
+    lock(label:'Windows10', quantity: 1, variable:'vmid') {
+        echo('using vm: '+env.vmid)
+        def machine = get_machine_info(env.vmid)
+        lock(label:'Levi', quantity: 1, variable:'devid') {
+            echo('using device: '+env.devid)
+            echo(jenkins.model.jenkins.getInstance().getComputer(machine.name).getJnlpMac())
+            //restore_snapshot(machine.vmxurl, machine.snapshot)
+            //start_vm(machine.vmxurl)
+            //sudo vmrun getGuestIPAddress /home/vmuser/vmware/W10HS_1/W10HS_1.vmx -wait
+            //sudo vmrun -gu vmuser -gp password runScriptInGuest /home/vmuser/vmware/W10HS_1/W10HS_1.vmx "" "powershell -Command \"Invoke-WebRequest http://172.17.0.1:8080/jnlpJars/agent.jar -OutFile C:\\Users\\vmuser\\Desktop\\agent.jar\""
+        }
     }
 }
+configure()
