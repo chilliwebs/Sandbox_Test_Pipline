@@ -23,7 +23,8 @@ def configure() {
             echo(ipaddr)
             run_script_on_vm('vmuser', 'password', machine.vmxurl, "", "powershell -Command \"Invoke-WebRequest http://172.17.0.1:8080/jnlpJars/agent.jar -OutFile C:\\Users\\vmuser\\Desktop\\agent.jar\"")
             sleep(5)
-            run_script_on_vm('vmuser', 'password', machine.vmxurl, "", "java -Dhudson.util.ProcessTree.disable=true -jar \"C:\\Users\\vmuser\\Desktop\\agent.jar\" -jnlpUrl \"http://172.17.0.1:8080/computer/W10HS_1/slave-agent.jnlp\" -secret 9047c64d32bfa07e89bf14245bcb6a1023ee4f6942f4a5b597d6b7a244bf9b3f -workDir \"C:\\User\\vmuser\"")
+            ///usr/bin/vmrun -gu vmuser -gp password runScriptInGuest /home/vmuser/vmware/W10HS_1/W10HS_1.vmx "" "java -Dhudson.util.ProcessTree.disable=true -jar C:\\Users\\vmuser\\Desktop\\agent.jar -jnlpUrl http://172.17.0.1:8080/computer/W10HS_1/slave-agent.jnlp -secret 9047c64d32bfa07e89bf14245bcb6a1023ee4f6942f4a5b597d6b7a244bf9b3f -workDir C:\\User\\vmuser" -activewindow -nowait
+            run_script_on_vm('vmuser', 'password', machine.vmxurl, "", "java -Dhudson.util.ProcessTree.disable=true -jar C:\\Users\\vmuser\\Desktop\\agent.jar -jnlpUrl http://172.17.0.1:8080/computer/W10HS_1/slave-agent.jnlp -secret 9047c64d32bfa07e89bf14245bcb6a1023ee4f6942f4a5b597d6b7a244bf9b3f -workDir C:\\User\\vmuser")
             sleep(5)
             node(machine.name) {
                 echo('were in!')
