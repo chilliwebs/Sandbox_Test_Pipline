@@ -14,6 +14,31 @@ pipeline {
           echo(machines_json)
           echo(devices_json)
 
+          parallel(
+            a: {
+              
+              echo "This is branch a"
+              lock('labels') {
+                echo 'in locked resource'
+                sleep 5
+              }
+            },
+            b: {
+              echo "This is branch b"
+              lock('labels') {
+                echo 'in locked resource'
+                sleep 5
+              }
+            },
+            c: {
+              echo "This is branch c"
+              lock('labels') {
+                echo 'in locked resource'
+                sleep 5
+              }
+            }
+          )
+
           echo "test"
         }
       }
