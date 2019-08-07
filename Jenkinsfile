@@ -24,6 +24,9 @@ pipeline {
             }
           }
 
+          machine_groups = null
+          devices = null
+
           echo "test"
         }
       }
