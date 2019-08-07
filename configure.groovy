@@ -28,7 +28,7 @@ def configure() {
             sleep(5)
             node(machine.name) {
                 echo('were in!')
-                sh 'shutdown /s now'
+                bat 'shutdown /s now'
             }
         }
     }
