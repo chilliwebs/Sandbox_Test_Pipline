@@ -11,20 +11,16 @@ this.devices_json = dir('/var/jenkins_home/workspace/crohub_Managment_Pipeline_m
 this.common = evaluate readFile('common.groovy')
 def test(){return this.common.test()}
 
+def get_machine_info(vmid){return (new groovy.json.JsonSlurper()).parseText(this.machines_json)[vmid])}
+def get_device_info(devid){return (new groovy.json.JsonSlurper()).parseText(this.devices_json)[devid])}
 //---------------
-
-this.machine_groups = (new groovy.json.JsonSlurper()).parseText(this.machines_json)
-this.devices = (new groovy.json.JsonSlurper()).parseText(this.devices_json)
-
-echo(machine_groups.toString())
-echo(devices.toString())
 
 echo('trying to lock a Windows10 resource')
 lock(label:'Windows10', quantity: 1, variable:'vmid') {
     echo('using vm: '+env.vmid)
     lock(label:'Levi', quantity: 1, variable:'devid') {
         echo('using device: '+env.devid)
-        echo(this.machine_groups[env.vmid].toString())
-        echo(this.devices[env.devid].toString())
+        echo(get_machine_info(env.vmid).toString())
+        echo(get_device_info(env.devid).toString())
     }
 }
