@@ -14,10 +14,10 @@ def configure() {
     echo('trying to lock a Windows10 resource')
     lock(label:'Windows10', quantity: 1, variable:'vmid') {
         echo('using vm: '+env.vmid)
-        def machine = (new groovy.json.JsonSlurper()).parseText(this.machines_json)[env.vmid]
+        def machine = new HashMap<>((new groovy.json.JsonSlurper()).parseText(this.machines_json)[env.vmid])
         lock(label:'Levi', quantity: 1, variable:'devid') {
             echo('using device: '+env.devid)
-            def device = (new groovy.json.JsonSlurper()).parseText(this.devices_json)[env.devid]
+            def device = new HashMap<>((new groovy.json.JsonSlurper()).parseText(this.devices_json)[env.devid])
             echo(jenkins.model.Jenkins.getInstance().getComputer(machine.name).getJnlpMac())
             //restore_snapshot(machine.vmxurl, machine.snapshot)
             //start_vm(machine.vmxurl)
