@@ -20,7 +20,7 @@ def configure() {
         def machine = get_machine_info(env.vmid)
         lock(label:'Levi', quantity: 1, variable:'devid') {
             echo('using device: '+env.devid)
-            echo(jenkins.model.jenkins.getInstance().getComputer(machine.name).getJnlpMac())
+            echo(jenkins.model.Jenkins.getInstance().getComputer(machine.name).getJnlpMac())
             //restore_snapshot(machine.vmxurl, machine.snapshot)
             //start_vm(machine.vmxurl)
             //sudo vmrun getGuestIPAddress /home/vmuser/vmware/W10HS_1/W10HS_1.vmx -wait
