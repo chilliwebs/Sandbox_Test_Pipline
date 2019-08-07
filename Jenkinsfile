@@ -14,8 +14,8 @@ pipeline {
           echo(machines_json)
           echo(devices_json)
 
-          lock(label:'Windows10', variable:'vmid') {
-            lock(label:'Levi', variable:'devid') {
+          lock(label:'Windows10', quantity: 1, variable:'vmid') {
+            lock(label:'Levi', quantity: 1, variable:'devid') {
               echo 'using vm: '+env.vmid
               echo 'using device: '+env.devid
             }
