@@ -13,7 +13,6 @@ def test(){return this.common.test()}
 //---------------
 
 def configure() {
-    echo('trying to lock a Windows10 resource')
     lock(label:'Windows10', quantity: 1, variable:'vmid') {
         def machine = new HashMap<>((new groovy.json.JsonSlurper()).parseText(this.machines_json)[env.vmid])
         lock(label:'Levi', quantity: 1, variable:'devid') {
