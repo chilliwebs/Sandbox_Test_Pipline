@@ -10,7 +10,7 @@ pipeline {
             stage('data') {
               node("master") {
                   def machines_json = dir('/var/jenkins_home/workspace/Vmware_Managment_Pipeline_masterconf')  { return readFile('machines.json') }
-                  machine = new HashMap<>((new groovy.json.JsonSlurper()).parseText(this.machines_json)[env.vmid])
+                  machine = new HashMap<>((new groovy.json.JsonSlurper()).parseText(machines_json)[env.vmid])
               }
             }
             stage('setup vm') {
