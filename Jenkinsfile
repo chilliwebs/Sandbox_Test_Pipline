@@ -6,6 +6,7 @@ pipeline {
       steps {
         script {
           load 'configure.groovy'
+          stash "vm_exec.groovy"
         }
       }
     }
@@ -21,6 +22,7 @@ pipeline {
             }
             stage('VM Execution') {
               node(machine.name) {
+                unstash "vm_exec.groovy"
                 load "vm_exec.groovy"
               }
             }
