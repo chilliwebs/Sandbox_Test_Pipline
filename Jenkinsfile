@@ -2,6 +2,7 @@ pipeline {
   agent none
   stages {
     stage('Configure') {
+      agent none
       steps {
         script {
           def cfg
