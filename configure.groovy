@@ -3,20 +3,15 @@ def configure() {
 
         def machine = [:]
 
-        stage('data') {
-            node("master") {
-                def machines_json = dir('/var/jenkins_home/workspace/Vmware_Managment_Pipeline_masterconf')  { return readFile('machines.json') }
-                machine = new HashMap<>((new groovy.json.JsonSlurper()).parseText(this.machines_json)[env.vmid])
-            }
-        }
-
         //lock(label:'Levi', quantity: 1, variable:'devid') {
         //    def device = new HashMap<>((new groovy.json.JsonSlurper()).parseText(this.devices_json)[env.devid])
         stage('setup vm') {
             node("master") {
+                def machines_json = dir('/var/jenkins_home/workspace/Vmware_Managment_Pipeline_masterconf')  { return readFile('machines.json') }
+                machine = new HashMap<>((new groovy.json.JsonSlurper()).parseText(this.machines_json)[env.vmid])
                 this.vm_mgmt_common = evaluate dir('/var/jenkins_home/workspace/Vmware_Managment_Pipeline_master') { return readFile('common.groovy')  }
 
-                echo("Building")
+                echo("setting up")
                 this.vm_mgmt_common.restore_snapshot(machine.vmxurl, machine.snapshot)
                 this.vm_mgmt_common.start_vm(machine.vmxurl)
                 def vmIP = this.vm_mgmt_common.get_vm_ipaddr(machine.vmxurl)
@@ -28,7 +23,7 @@ def configure() {
         }
         stage('vm execution') {
             node(machine.name) {
-                echo("Testing")
+                echo("executing")
                 echo('were in!')
                 sleep(30)
                 bat('shutdown /s /f /t 0')
@@ -37,4 +32,5 @@ def configure() {
         //}
     }
 }
-configure()
+
+return this
