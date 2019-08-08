@@ -2,6 +2,7 @@ pipeline {
   agent none
   stages {
     stage('Configure') {
+      agent any
       steps {
         script {
           load 'configure.groovy'
@@ -11,7 +12,6 @@ pipeline {
     stage('Delegate') {
       steps {
         script {
-          load 'configure.groovy'
           lock(label:'Windows10', quantity: 1, variable:'vmid') {
             def machine = [:]
             stage('Setup VM') {
