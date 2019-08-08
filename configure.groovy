@@ -18,10 +18,7 @@ def configure() {
         //lock(label:'Levi', quantity: 1, variable:'devid') {
         //    def device = new HashMap<>((new groovy.json.JsonSlurper()).parseText(this.devices_json)[env.devid])
         stage('setup vm') {
-            agent {
-                label("master")
-            }
-            steps {
+            node("master") {
                 echo("Building")
                 restore_snapshot(machine.vmxurl, machine.snapshot)
                 start_vm(machine.vmxurl)
@@ -32,10 +29,7 @@ def configure() {
             }
         }
         stage('vm execution') {
-            agent {
-                label(machine.name)
-            }
-            steps {
+            node(machine.name) {
                 echo("Testing")
                 echo('were in!')
                 sleep(30)
