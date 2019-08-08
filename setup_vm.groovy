@@ -4,7 +4,7 @@ def machines_json = dir('/var/jenkins_home/workspace/Vmware_Managment_Pipeline_m
 //---------------
 
 def setup_vm() {
-    machine = (new groovy.json.JsonSlurper()).parseText(this.machines_json)[env.vmid]
+    machine = (new groovy.json.JsonSlurper()).parseText(machines_json)[env.vmid]
     echo("setting up")
     vm_mgmt_common.restore_snapshot(machine.vmxurl, machine.snapshot)
     vm_mgmt_common.start_vm(machine.vmxurl)
