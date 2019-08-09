@@ -14,6 +14,7 @@ pipeline {
       steps {
         script {
           def tests = [[os:'Windows10'],[os:'Windows10'],[os:'Windows10']]
+
           def tasks = [:]
           tests.eachWithIndex { test_conf, index ->
             def dowork = {
@@ -37,8 +38,9 @@ pipeline {
                 }
               }
             }
-            tasks.put(test_conf.os+index, dowork)
+            tasks.put(test_conf.os+"_"+index, dowork)
           }
+          
           parallel tasks
         }
       }
