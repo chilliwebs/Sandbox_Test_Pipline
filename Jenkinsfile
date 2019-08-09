@@ -20,27 +20,30 @@ pipeline {
             def dowork = {
               lock(label:test_conf.os, quantity: 1, variable:'vmid') {
                 def machine = [:]
+                def node_name = null
                 stage('Setup VM') {
                   node {
                     machine = load "setup_vm.groovy"
                   }
                 }
                 stage('VM Execution') {
-                  node(machine.name) {
+                  node('vmnode') {
+                    node_name = env.node_name
                     unstash "vm_exec.groovy"
                     load "vm_exec.groovy"
                   }
                 }
                 stage('Teardown VM') {
                   node {
-                    load "teardown_vm.groovy"
+                    def tvm = load "teardown_vm.groovy"
+                    tvm.teardown_vm(node_name)
                   }
                 }
               }
             }
             tasks.put(test_conf.os+"_"+index, dowork)
           }
-          
+
           parallel tasks
         }
       }

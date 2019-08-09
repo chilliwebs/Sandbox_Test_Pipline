@@ -3,11 +3,11 @@ this.vmgmt = evaluate dir('/var/jenkins_home/workspace/Vmware_Managment_Pipeline
 this.machines_json = dir('/var/jenkins_home/workspace/Vmware_Managment_Pipeline_masterconf')  { return readFile('machines.json') }
 //---------------
 
-def teardown_vm() {
+def teardown_vm(node_name) {
     machine = new HashMap<>((new groovy.json.JsonSlurper()).parseText(this.machines_json)[env.vmid])
     echo("tearing down")
-    Jenkins.instance.getNode(machine.name).getComputer().disconnect(hudson.slaves.OfflineCause.create(hudson.slaves.Messages._RetentionStrategy_Demand_OfflineIdle()))
+    Jenkins.instance.getNode(node_name).getComputer().disconnect(hudson.slaves.OfflineCause.create(hudson.slaves.Messages._RetentionStrategy_Demand_OfflineIdle()))
     this.vmgmt.stop_vm(machine.vmxurl)
 }
 
-teardown_vm()
+return this
