@@ -27,7 +27,7 @@ pipeline {
                     }
                   }
                   stage('VM Execution') {
-                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                       node(env.vmnod) {
                         unstash "vm_exec.groovy"
                         load "vm_exec.groovy"
