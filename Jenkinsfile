@@ -15,7 +15,7 @@ pipeline {
         script {
           def tests = [[os:'Windows10'],[os:'Windows10'],[os:'Windows10']]
           def tasks = [:]
-          parallel tests.eachWithIndex { test_conf, index ->
+          tests.eachWithIndex { test_conf, index ->
             def dowork = {
               lock(label:test_conf.os, quantity: 1, variable:'vmid') {
                 def machine = [:]
