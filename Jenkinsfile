@@ -14,7 +14,7 @@ pipeline {
       steps {
         script {
           def tests = [[os:'Windows10'],[os:'Windows10'],[os:'Windows10']]
-          parallel test.collect { test_conf ->
+          parallel tests.collect { test_conf ->
             lock(label:'Windows10', quantity: 1, variable:'vmid') {
               def machine = [:]
               stage('Setup VM') {
