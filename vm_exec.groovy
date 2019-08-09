@@ -7,7 +7,7 @@ def vm_exec() {
     echo("Testing")
     echo('were in!')
     sleep(30)
-    bat('shutdown /s /f /t 0')
+    echo('done!')
 }
 
 vm_exec()

@@ -28,6 +28,11 @@ pipeline {
                   load "vm_exec.groovy"
                 }
               }
+              stage('Teardown VM') {
+                node {
+                  load "teardown_vm.groovy"
+                }
+              }
             }
           }
         }
