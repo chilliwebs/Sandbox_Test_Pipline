@@ -27,9 +27,11 @@ pipeline {
                     }
                   }
                   stage('VM Execution') {
-                    node(env.vmnod) {
-                      unstash "vm_exec.groovy"
-                      load "vm_exec.groovy"
+                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                      node(env.vmnod) {
+                        unstash "vm_exec.groovy"
+                        load "vm_exec.groovy"
+                      }
                     }
                   }
                   stage('Teardown VM') {
