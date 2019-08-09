@@ -19,24 +19,23 @@ pipeline {
           tests.eachWithIndex { test_conf, index ->
             def dowork = {
               lock(label:test_conf.os, quantity: 1, variable:'vmid') {
-                def machine = [:]
-                def node_name = null
-                stage('Setup VM') {
-                  node {
-                    machine = load "setup_vm.groovy"
+                lock(label:'vmnode', quantity: 1, variable:'vmnod') {
+                  def node_name = null
+                  stage('Setup VM') {
+                    node {
+                      load "setup_vm.groovy"
+                    }
                   }
-                }
-                stage('VM Execution') {
-                  node('vmnode') {
-                    node_name = env.node_name
-                    unstash "vm_exec.groovy"
-                    load "vm_exec.groovy"
+                  stage('VM Execution') {
+                    node(env.vmnod) {
+                      unstash "vm_exec.groovy"
+                      load "vm_exec.groovy"
+                    }
                   }
-                }
-                stage('Teardown VM') {
-                  node {
-                    def tvm = load "teardown_vm.groovy"
-                    tvm.teardown_vm(node_name)
+                  stage('Teardown VM') {
+                    node {
+                      load "teardown_vm.groovy"
+                    }
                   }
                 }
               }
