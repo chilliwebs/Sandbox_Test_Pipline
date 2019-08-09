@@ -14,8 +14,9 @@ pipeline {
       steps {
         script {
           def tests = [[os:'Windows10'],[os:'Windows10'],[os:'Windows10']]
-          parallel tests.withIndex().collectEntities { test_conf, index ->
-            [(test_conf.os+index):{
+          def tasks = [:]
+          parallel tests.eachWithIndex { test_conf, index ->
+            def dowork = {
               lock(label:test_conf.os, quantity: 1, variable:'vmid') {
                 def machine = [:]
                 stage('Setup VM') {
@@ -35,8 +36,10 @@ pipeline {
                   }
                 }
               }
-            }]
+            }
+            tasks.put(test_conf.os+index, dowork)
           }
+          parallel tasks
         }
       }
     }
