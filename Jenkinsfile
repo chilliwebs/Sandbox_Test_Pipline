@@ -6,7 +6,9 @@ pipeline {
       steps {
         script {
           load 'configure.groovy'
+          stash "setup_vm.groovy"
           stash "vm_exec.groovy"
+          stash "teardown_vm.groovy"
         }
       }
     }
@@ -23,6 +25,7 @@ pipeline {
                   def node_name = null
                   stage('Setup VM') {
                     node {
+                      unstash "setup_vm.groovy"
                       load "setup_vm.groovy"
                     }
                   }
@@ -36,6 +39,7 @@ pipeline {
                   }
                   stage('Teardown VM') {
                     node {
+                      unstash "teardown_vm.groovy"
                       load "teardown_vm.groovy"
                     }
                   }
