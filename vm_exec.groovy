@@ -4,6 +4,8 @@
 //---------------
 
 def vm_exec() {
+    echo "**GOT VM ${env.vmid}**"
+    echo "**GOT NODE ${env.vmnod}**"
     echo("Testing")
     echo('were in!')
     sleep(30)
