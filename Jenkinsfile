@@ -24,22 +24,22 @@ pipeline {
                 def vm = env.vmid
                 echo "**GOT VM ${vm}**"
                 lock(label:'master_vmhost_node', quantity: 1, variable:'vmnod') {
-                  def node = env.vmnod
-                  echo "**GOT NODE ${node}**"
+                  def vm_node = env.vmnod
+                  echo "**GOT NODE ${vm_node}**"
                   
                   def node_name = null
                   stage('Setup VM') {
                     node {
                       echo "**GOT VM ${vm} vs ${env.vmid}**"
-                      echo "**GOT NODE ${node} vs ${env.vmnod}**"
+                      echo "**GOT NODE ${vm_node} vs ${env.vmnod}**"
                       unstash "setup_vm.groovy"
                       def stp = load "setup_vm.groovy"
-                      stp.setup_vm(vm, node)
+                      stp.setup_vm(vm, vm_node)
                     }
                   }
                   stage('VM Execution') {
                     catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                      node(node) {
+                      node(vm_node) {
                         unstash "vm_exec.groovy"
                         load "vm_exec.groovy"
                       }
@@ -48,10 +48,10 @@ pipeline {
                   stage('Teardown VM') {
                     node {
                       echo "**GOT VM ${vm} vs ${env.vmid}**"
-                      echo "**GOT NODE ${node} vs ${env.vmnod}**"
+                      echo "**GOT NODE ${vm_node} vs ${env.vmnod}**"
                       unstash "teardown_vm.groovy"
                       def trd = load "teardown_vm.groovy"
-                      trd.teardown_vm(vm, node)
+                      trd.teardown_vm(vm, vm_node)
                     }
                   }
                 }
