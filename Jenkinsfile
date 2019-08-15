@@ -43,7 +43,7 @@ pipeline {
 
           def tasks = [:]
           tests.eachWithIndex { test_conf, index ->
-            tasks.put(test_conf.os+"_"+index, { dowork(test_conf) })
+            tasks.put(test_conf.os+"_"+index, { this.dowork(test_conf) })
           }
 
           parallel tasks
