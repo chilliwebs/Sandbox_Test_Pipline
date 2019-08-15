@@ -21,7 +21,12 @@ pipeline {
           tests.eachWithIndex { test_conf, index ->
             def dowork = {
               lock(label:test_conf.os, quantity: 1, variable:'vmid') {
+                def vm = env.vmid
+                echo "**GOT VM ${vm}**"
                 lock(label:'master_vmhost_node', quantity: 1, variable:'vmnod') {
+                  def node = env.vmnod
+                  echo "**GOT NODE ${node}**"
+                  
                   def node_name = null
                   stage('Setup VM') {
                     node {
@@ -31,9 +36,12 @@ pipeline {
                   }
                   stage('VM Execution') {
                     catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                      node(env.vmnod) {
+                      echo "**GOT VM ${vm} vs ${env.vmid}**"
+                      echo "**GOT NODE ${node} vs ${env.vmnod}**"
+                      node(node) {
                         unstash "vm_exec.groovy"
-                        load "vm_exec.groovy"
+                        def vm_exec = load "vm_exec.groovy"
+                        vm_exec.setup_vm(vm, node)
                       }
                     }
                   }
