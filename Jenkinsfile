@@ -33,8 +33,8 @@ pipeline {
                       echo "**GOT VM ${vm} vs ${env.vmid}**"
                       echo "**GOT NODE ${node} vs ${env.vmnod}**"
                       unstash "setup_vm.groovy"
-                      this.setup_vm = load "setup_vm.groovy"
-                      this.setup_vm.setup_vm(vm, node)
+                      def stp = load "setup_vm.groovy"
+                      stp.setup_vm(vm, node)
                     }
                   }
                   stage('VM Execution') {
@@ -50,8 +50,8 @@ pipeline {
                       echo "**GOT VM ${vm} vs ${env.vmid}**"
                       echo "**GOT NODE ${node} vs ${env.vmnod}**"
                       unstash "teardown_vm.groovy"
-                      this.teardown_vm = load "teardown_vm.groovy"
-                      this.teardown_vm.teardown_vm(vm, node)
+                      def trd = load "teardown_vm.groovy"
+                      trd.teardown_vm(vm, node)
                     }
                   }
                 }
