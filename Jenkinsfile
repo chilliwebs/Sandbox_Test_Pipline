@@ -1,29 +1,3 @@
-def dowork() {
-  lock(label:test_conf.os, quantity: 1, variable:'vmid') {
-    lock(label:'master_vmhost_node', quantity: 1, variable:'vmnod') {
-      def node_name = null
-      stage('Setup VM') {
-        node {
-          load "setup_vm.groovy"
-        }
-      }
-      stage('VM Execution') {
-        catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-          node(env.vmnod) {
-            unstash "vm_exec.groovy"
-            load "vm_exec.groovy"
-          }
-        }
-      }
-      stage('Teardown VM') {
-        node {
-          load "teardown_vm.groovy"
-        }
-      }
-    }
-  }
-}
-
 pipeline {
   agent none
   stages {
@@ -43,7 +17,32 @@ pipeline {
 
           def tasks = [:]
           tests.eachWithIndex { test_conf, index ->
-            tasks.put(test_conf.os+"_"+index, { this.dowork(test_conf) })
+            def dowork = {
+              lock(label:test_conf.os, quantity: 1, variable:'vmid') {
+                lock(label:'master_vmhost_node', quantity: 1, variable:'vmnod') {
+                  def node_name = null
+                  stage('Setup VM') {
+                    node {
+                      load "setup_vm.groovy"
+                    }
+                  }
+                  stage('VM Execution') {
+                    catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                      node(env.vmnod) {
+                        unstash "vm_exec.groovy"
+                        load "vm_exec.groovy"
+                      }
+                    }
+                  }
+                  stage('Teardown VM') {
+                    node {
+                      load "teardown_vm.groovy"
+                    }
+                  }
+                }
+              }
+            }
+            tasks.put(test_conf.os+"_"+index, dowork)
           }
 
           parallel tasks
