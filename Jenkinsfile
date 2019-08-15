@@ -1,6 +1,6 @@
 def dowork() {
   lock(label:test_conf.os, quantity: 1, variable:'vmid') {
-    lock(label:'vmnode', quantity: 1, variable:'vmnod') {
+    lock(label:'master_vmhost_node', quantity: 1, variable:'vmnod') {
       def node_name = null
       stage('Setup VM') {
         node {
