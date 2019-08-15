@@ -30,15 +30,15 @@ pipeline {
                   def node_name = null
                   stage('Setup VM') {
                     node {
+                      echo "**GOT VM ${vm} vs ${env.vmid}**"
+                      echo "**GOT NODE ${node} vs ${env.vmnod}**"
                       unstash "setup_vm.groovy"
-                      def setup_vm = load "setup_vm.groovy"
-                      setup_vm.setup_vm(vm, node)
+                      this.setup_vm = load "setup_vm.groovy"
+                      this.setup_vm.setup_vm(vm, node)
                     }
                   }
                   stage('VM Execution') {
                     catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                      echo "**GOT VM ${vm} vs ${env.vmid}**"
-                      echo "**GOT NODE ${node} vs ${env.vmnod}**"
                       node(node) {
                         unstash "vm_exec.groovy"
                         load "vm_exec.groovy"
@@ -47,9 +47,11 @@ pipeline {
                   }
                   stage('Teardown VM') {
                     node {
+                      echo "**GOT VM ${vm} vs ${env.vmid}**"
+                      echo "**GOT NODE ${node} vs ${env.vmnod}**"
                       unstash "teardown_vm.groovy"
-                      def teardown_vm = load "teardown_vm.groovy"
-                      teardown_vm.teardown_vm(vm, node)
+                      this.teardown_vm = load "teardown_vm.groovy"
+                      this.teardown_vm.teardown_vm(vm, node)
                     }
                   }
                 }
