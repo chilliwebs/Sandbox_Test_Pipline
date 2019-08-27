@@ -9,7 +9,7 @@ def vm_exec() {
     echo "**GOT NODE ${env.vmnod}**"
     echo("Testing")
     echo('were in!')
-    sleep(60*20)
+    sleep(60*25)
     echo('done!')
     bat 'shutdown /s /f /t 0'
 }
