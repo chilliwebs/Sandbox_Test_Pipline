@@ -30,9 +30,11 @@ pipeline {
                   }
                   stage('VM Execution') {
                     catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                      node(env.vmnod) {
-                        unstash "vm_exec.groovy"
-                        load "vm_exec.groovy"
+                      timeout(30) {
+                          node(env.vmnod) {
+                          unstash "vm_exec.groovy"
+                          load "vm_exec.groovy"
+                        }
                       }
                     }
                   }
