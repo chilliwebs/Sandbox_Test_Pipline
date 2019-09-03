@@ -1,0 +1,214 @@
+{
+  "id": "ca5259f9-fee7-4204-881d-50062400fe88",
+  "version": "2.0",
+  "name": "Simple_BTU_Selenium_Test",
+  "url": "https://btu.bose.com",
+  "tests": [{
+    "id": "a3e7931d-2e9c-4f24-9fed-510f19c813aa",
+    "name": "Simple FW Update",
+    "commands": [{
+      "id": "f0d04407-2a57-4d47-8786-5b5aa6ab0ca8",
+      "comment": "",
+      "command": "open",
+      "target": "",
+      "targets": [],
+      "value": "/"
+    }, {
+      "id": "5f4b7257-13f7-41ee-9013-6fc33ff7b56b",
+      "comment": "",
+      "command": "waitForElementVisible",
+      "target": "css=#connect_noinstall .ic_label",
+      "targets": [
+        ["css=#connect_noinstall .ic_label", "css:finder"],
+        ["xpath=//div[@id='connect_noinstall']/h3", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div/h3", "xpath:position"],
+        ["xpath=//h3[contains(.,'Bose Updater is ready.')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "6eaf74aa-71ef-4954-a990-79aa5719dbd5",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=#connect_noinstall .ic_label",
+      "targets": [
+        ["css=#connect_noinstall .ic_label", "css:finder"],
+        ["xpath=//div[@id='connect_noinstall']/h3", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div/h3", "xpath:position"],
+        ["xpath=//h3[contains(.,'Bose Updater is ready.')]", "xpath:innerText"]
+      ],
+      "value": "Bose Updater is ready."
+    }, {
+      "id": "fbd16f97-c48e-4519-a4de-e87f76098feb",
+      "comment": "",
+      "command": "waitForElementVisible",
+      "target": "css=#device_productoverview_container .btu-product-update-name",
+      "targets": [
+        ["css=#device_productoverview_container .btu-product-update-name", "css:finder"],
+        ["xpath=//div[@id='device_productoverview_container']/div/h2", "xpath:idRelative"],
+        ["xpath=//div[6]/div/section/div/div/h2", "xpath:position"],
+        ["xpath=//h2[contains(.,'SoundSport Free Wireless Headphones ')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "789cbbbf-814e-4dd2-8bb3-bba7ad7ff9be",
+      "comment": "",
+      "command": "pause",
+      "target": "2000",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "295d9676-850d-422d-b143-6e22c009c97f",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "xpath=//body",
+      "targets": [],
+      "value": "a"
+    }, {
+      "id": "28cc17c6-ded3-48ab-a33e-0b1c8ea9fe88",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "xpath=//body",
+      "targets": [],
+      "value": "d"
+    }, {
+      "id": "a80b33b9-10ac-4253-88ce-19dd4167e71d",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "xpath=//body",
+      "targets": [],
+      "value": "v"
+    }, {
+      "id": "566b0580-4d53-4861-bfc1-6ea4bf2fe03c",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "xpath=//body",
+      "targets": [],
+      "value": "${KEY_UP}"
+    }, {
+      "id": "ab531471-51dd-4252-a8e3-17cd6582a108",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "xpath=//body",
+      "targets": [],
+      "value": "${KEY_DOWN}"
+    }, {
+      "id": "71e5e53d-e370-4c58-b1ca-6f54eb03965b",
+      "comment": "",
+      "command": "waitForElementVisible",
+      "target": "id=device_updatenow",
+      "targets": [],
+      "value": "10000"
+    }, {
+      "id": "40ca0288-7e84-44e0-9fe7-3d98b7929fba",
+      "comment": "",
+      "command": "pause",
+      "target": "2000",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7369338b-7d86-4e81-a415-b5d12a499715",
+      "comment": "",
+      "command": "click",
+      "target": "id=device_updatenow",
+      "targets": [
+        ["id=device_updatenow", "id"],
+        ["css=#device_updatenow", "css:finder"],
+        ["xpath=//button[@id='device_updatenow']", "xpath:attributes"],
+        ["xpath=//div[@id='device_update_buttonEL']/button", "xpath:idRelative"],
+        ["xpath=//div[3]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Update Now')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3153ca53-1ce3-4f00-8bc8-6456ee636383",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "id=device_updating",
+      "targets": [
+        ["id=device_updating", "id"],
+        ["css=#device_updating", "css:finder"],
+        ["xpath=//div[@id='device_updating']", "xpath:attributes"],
+        ["xpath=//div[@id='device_productoverview_container']/div/div[4]", "xpath:idRelative"],
+        ["xpath=//section/div/div/div[4]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5bab8697-c46b-47fe-931c-e66885dffd42",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "id=device_update_progress",
+      "targets": [
+        ["id=device_update_progress", "id"],
+        ["css=#device_update_progress", "css:finder"],
+        ["xpath=//span[@id='device_update_progress']", "xpath:attributes"],
+        ["xpath=//div[@id='device_productoverview_container']/div/h2/span[3]", "xpath:idRelative"],
+        ["xpath=//h2/span[3]", "xpath:position"],
+        ["xpath=//span[contains(.,'47%')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1a09fe38-d0e5-4cde-8a77-f77ea6c660fa",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "css=#device_updatestatus > #device_updateavailable",
+      "targets": [
+        ["css=#device_updatestatus > #device_updateavailable", "css:finder"],
+        ["xpath=(//div[@id='device_updateavailable'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='device_updatestatus']/div", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3b365e3d-a968-4205-9460-f8a08d728d05",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "id=device_update_instructions",
+      "targets": [
+        ["id=device_update_instructions", "id"],
+        ["css=#device_update_instructions", "css:finder"],
+        ["xpath=//div[@id='device_update_instructions']", "xpath:attributes"],
+        ["xpath=//div[@id='device_productoverview_container']/div[3]", "xpath:idRelative"],
+        ["xpath=//div[6]/div/section/div/div[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "011dc676-a55f-436b-b0b4-d499bad4ea5b",
+      "comment": "",
+      "command": "waitForElementVisible",
+      "target": "id=device_updatecompletesuccess",
+      "targets": [
+        ["id=device_updatecompletesuccess", "id"],
+        ["css=#device_updatecompletesuccess", "css:finder"],
+        ["xpath=//span[@id='device_updatecompletesuccess']", "xpath:attributes"],
+        ["xpath=//div[@id='device_updating']/span[2]", "xpath:idRelative"],
+        ["xpath=//div[4]/span[2]", "xpath:position"],
+        ["xpath=//span[contains(.,'Your product is now up-to-date!')]", "xpath:innerText"]
+      ],
+      "value": "1200000"
+    }, {
+      "id": "19db7aa7-24f5-4302-a2c4-417923864809",
+      "comment": "",
+      "command": "verifyText",
+      "target": "id=device_update_progress",
+      "targets": [
+        ["id=device_update_progress", "id"],
+        ["css=#device_update_progress", "css:finder"],
+        ["xpath=//span[@id='device_update_progress']", "xpath:attributes"],
+        ["xpath=//div[@id='device_productoverview_container']/div/h2/span[3]", "xpath:idRelative"],
+        ["xpath=//h2/span[3]", "xpath:position"],
+        ["xpath=//span[contains(.,'100%')]", "xpath:innerText"]
+      ],
+      "value": "100%"
+    }]
+  }],
+  "suites": [{
+    "id": "3c00f1fd-bb38-4655-98fe-9f025f7bce62",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 1500,
+    "tests": ["a3e7931d-2e9c-4f24-9fed-510f19c813aa"]
+  }],
+  "urls": ["https://btu.bose.com/"],
+  "plugins": []
+}
