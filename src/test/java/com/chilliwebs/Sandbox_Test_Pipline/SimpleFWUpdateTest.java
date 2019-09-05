@@ -19,6 +19,8 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import java.util.*;
 
+// example usage:  mvn test -Dbrowser="firefox"
+
 public class SimpleFWUpdateTest {
   private WebDriver driver;
   private Map<String, Object> vars;
