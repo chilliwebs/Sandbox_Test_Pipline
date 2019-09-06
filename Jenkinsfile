@@ -39,9 +39,7 @@ pipeline {
                     catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                       timeout(45) {
                         node(env.vmnod) {
-                          environment {
-                            browser: test_conf.browser
-                          }
+                          env.browser = test_conf.browser
                           unstash "vm_exec.groovy"
                           load "vm_exec.groovy"
                         }
