@@ -11,8 +11,12 @@ def vm_exec() {
     echo('were in!')
     unstash "apache-maven-3.6.2-bin.zip"
     unzip zipFile: "apache-maven-3.6.2-bin.zip"
-    bat "dir"
-    sleep(30)
+
+    withEnv(["PATH+MAVEN=${workspace}/apache-maven-3.6.2/bin"]) {
+        bat 'env'
+        bat "dir"
+    }
+
     echo('done!')
     bat 'shutdown /s /f /t 0'
 }
