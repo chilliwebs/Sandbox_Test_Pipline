@@ -14,14 +14,14 @@ def vm_exec() {
     unstash "geckodriver.exe"
     unstash "IEDriverServer.exe"
     unstash "MicrosoftWebDriver.exe"
-    
+
     unstash "apache-maven-3.6.2-bin.zip"
     unzip zipFile: "apache-maven-3.6.2-bin.zip", dir: "C:\\maven"
 
     withEnv(["PATH+MAVEN=C:\\maven\\apache-maven-3.6.2\\bin"]) {
         bat 'set'
         bat "dir"
-        bat "mvn clean test -Dbrowser=\"${env.browser}\""
+        bat "mvn clean test"
     }
 
     echo('done!')
