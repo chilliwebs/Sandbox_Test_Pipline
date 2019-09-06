@@ -21,7 +21,7 @@ def vm_exec() {
     withEnv(["PATH+MAVEN=C:\\maven\\apache-maven-3.6.2\\bin"]) {
         bat 'set'
         bat "dir"
-        bat "mvn clean test -Dbrowser=${env.browser}"
+        bat "mvn clean test -Dbrowser=\"${env.browser}\"""
     }
 
     echo('done!')
