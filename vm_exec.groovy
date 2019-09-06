@@ -19,6 +19,8 @@ def vm_exec() {
         bat 'mvn clean test -Dbrowser="chrome"'
     }
 
+    sleep(60*60)
+
     echo('done!')
     bat 'shutdown /s /f /t 0'
 }
