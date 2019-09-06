@@ -12,7 +12,7 @@ def vm_exec() {
     unstash "apache-maven-3.6.2-bin.zip"
     unzip zipFile: "apache-maven-3.6.2-bin.zip", dir: "C:\\maven"
 
-    withEnv(["PATH+MAVEN=C:/maven/apache-maven-3.6.2/apache-maven-3.6.2/bin"]) {
+    withEnv(["PATH+MAVEN=C:\\maven\\apache-maven-3.6.2\\bin"]) {
         bat 'set'
         bat "dir"
         bat 'mvn clean test -Dbrowser="firefox"'
