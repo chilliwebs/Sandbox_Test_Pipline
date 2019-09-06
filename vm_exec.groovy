@@ -9,7 +9,10 @@ def vm_exec() {
     echo "**GOT NODE ${env.vmnod}**"
     echo("Testing")
     echo('were in!')
-    sleep(60*30)
+    unstash "apache-maven-3.6.2-bin.zip"
+    unzip zipFile: "apache-maven-3.6.2-bin.zip"
+    bat "dir"
+    sleep(30)
     echo('done!')
     bat 'shutdown /s /f /t 0'
 }

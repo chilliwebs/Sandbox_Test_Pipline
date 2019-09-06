@@ -30,7 +30,7 @@ pipeline {
                   }
                   stage('VM Execution') {
                     catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                      timeout(35) {
+                      timeout(45) {
                           node(env.vmnod) {
                           unstash "vm_exec.groovy"
                           load "vm_exec.groovy"
