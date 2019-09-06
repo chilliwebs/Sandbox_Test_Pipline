@@ -9,6 +9,7 @@ def vm_exec() {
     echo "**GOT NODE ${env.vmnod}**"
     echo("Testing")
     echo('were in!')
+    unstash "geckodriver.exe"
     unstash "apache-maven-3.6.2-bin.zip"
     unzip zipFile: "apache-maven-3.6.2-bin.zip", dir: "C:\\maven"
 
