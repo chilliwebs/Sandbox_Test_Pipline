@@ -20,7 +20,8 @@ pipeline {
             [os:'Windows10', browser: 'firefox'],
             [os:'Windows10', browser: 'internet explorer'],
             [os:'Windows10', browser: 'MicrosoftEdge'],
-            [os:'Windows10', browser: 'chrome']
+            [os:'Windows10', browser: 'chrome'],
+            [os:'Windows10', browser: 'firefox'],
           ]
 
           def tasks = [:]
