@@ -15,7 +15,13 @@ pipeline {
     stage('Delegate') {
       steps {
         script {
-          def tests = [[os:'Windows10']]//,[os:'Windows10'],[os:'Windows10'],[os:'Windows10'],[os:'Windows10']]
+          def tests = [
+            [os:'Windows10', browser: 'chrome'],
+            [os:'Windows10', browser: 'firefox'],
+            [os:'Windows10', browser: 'internet explorer'],
+            [os:'Windows10', browser: 'MicrosoftEdge'],
+            [os:'Windows10', browser: 'chrome']
+          ]
 
           def tasks = [:]
           tests.eachWithIndex { test_conf, index ->
@@ -31,7 +37,10 @@ pipeline {
                   stage('VM Execution') {
                     catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                       timeout(45) {
-                          node(env.vmnod) {
+                        node(env.vmnod) {
+                          environment {
+                            browser: test_conf.browser
+                          }
                           unstash "vm_exec.groovy"
                           load "vm_exec.groovy"
                         }

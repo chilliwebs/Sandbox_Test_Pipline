@@ -16,10 +16,8 @@ def vm_exec() {
     withEnv(["PATH+MAVEN=C:\\maven\\apache-maven-3.6.2\\bin"]) {
         bat 'set'
         bat "dir"
-        bat 'mvn clean test -Dbrowser="chrome"'
+        bat "mvn clean test -Dbrowser=\"${env.browser}\""
     }
-
-    sleep(60*60)
 
     echo('done!')
     bat 'shutdown /s /f /t 0'
