@@ -16,14 +16,14 @@ pipeline {
       agent {
         docker {
             image 'maven:3-alpine'
-            args '-v maven-repo:/root/.m2 -u root'
+            args '-v maven-repo:/var/maven/.m2 -e MAVEN_CONFIG=/var/maven/.m2'
         }
       }
       stages {
         stage('Build') {
           steps {
-            sh "mvn install"
-            sh "mvn dependency:copy-dependencies"
+            sh "mvn -Duser.home=/var/maven install"
+            sh "mvn -Duser.home=/var/maven dependency:copy-dependencies"
 
             stash "chromedriver.exe"
             stash "geckodriver.exe"
