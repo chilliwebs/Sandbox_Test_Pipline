@@ -16,13 +16,13 @@ pipeline {
       agent {
         docker {
             image 'maven:3-alpine'
-            args '-v maven-repo:/${HOME}/.m2'
+            args '-v maven-repo:/root/.m2'
         }
       }
       stages {
         stage('Build') {
           steps {
-            sh "mvn clean install"
+            sh "mvn install"
             sh "mvn dependency:copy-dependencies"
 
             stash "chromedriver.exe"
