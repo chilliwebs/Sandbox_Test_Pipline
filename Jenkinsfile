@@ -22,8 +22,8 @@ pipeline {
       stages {
         stage('Build') {
           steps {
-            sh "mvn -Duser.home=/var/maven install"
-            sh "mvn -Duser.home=/var/maven dependency:copy-dependencies"
+            sh "mvn install"
+            sh "mvn dependency:copy-dependencies"
 
             stash "chromedriver.exe"
             stash "geckodriver.exe"
