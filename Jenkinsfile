@@ -25,6 +25,11 @@ pipeline {
             sh "mvn clean install"
             sh "mvn dependency:copy-dependencies"
 
+            stash "chromedriver.exe"
+            stash "geckodriver.exe"
+            stash "IEDriverServer.exe"
+            stash "MicrosoftWebDriver.exe"
+
             dir('target') {
               stash "Sandbox_Test_Pipline-1.0-SNAPSHOT-tests.jar"
               dir('dependency') {

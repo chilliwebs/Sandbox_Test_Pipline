@@ -36,18 +36,6 @@ def vm_exec() {
         unstash "selenium-edge-driver-3.141.59.jar"
     }
 
-    // unstash "selenium-opera-driver-3.141.59.jar"
-    // unstash "selenium-safari-driver-3.141.59.jar"
-
-    // unstash "apache-maven-3.6.2-bin.zip"
-    // unzip zipFile: "apache-maven-3.6.2-bin.zip", dir: "C:\\maven"
-
-    // withEnv(["PATH+MAVEN=C:\\maven\\apache-maven-3.6.2\\bin"]) {
-    //     bat 'set'
-    //     bat "dir"
-    //     bat "mvn clean test -Dbrowser=\"${env.browser}\""
-    // }
-
     bat "java -cp * -Dbrowser=\"${env.browser}\" org.junit.runner.JUnitCore com.chilliwebs.Sandbox_Test_Pipline.SimpleFWUpdateTest"
 
     echo('done!')
