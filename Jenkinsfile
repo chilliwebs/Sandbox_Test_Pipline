@@ -16,7 +16,7 @@ pipeline {
       agent {
         docker {
             image 'maven:3-alpine'
-            args '-u jenkins:jenkins -v maven-repo:/var/maven/.m2:z -e MAVEN_CONFIG=/var/maven/.m2 -e MAVEN_OPTS="-Duser.home=/var/maven"'
+            args '-u 1000:1000 -v maven-repo:/var/maven/.m2:z -e MAVEN_CONFIG=/var/maven/.m2 -e MAVEN_OPTS="-Duser.home=/var/maven"'
         }
       }
       stages {
