@@ -18,6 +18,8 @@ def setup_vm() {
     def secret = jenkins.model.Jenkins.getInstance().getComputer(env.vmnod).getJnlpMac()
 
     this.vmgmt.run_script_on_vm('vmuser', 'password', machine.vmxurl, "", 
+        "schtasks /create /tn 'shutdown timeout' /tr 'shutdown.exe /s /f /t 0' /sc onidle /i 15"
+    this.vmgmt.run_script_on_vm('vmuser', 'password', machine.vmxurl, "", 
         "powershell -Command \"Invoke-WebRequest http://${masterIP}:8080/jnlpJars/agent.jar -OutFile C:\\Users\\vmuser\\Desktop\\agent.jar\"")
     this.vmgmt.run_script_on_vm('vmuser', 'password', machine.vmxurl, "", 
         "start cmd /k java -Dhudson.util.ProcessTree.disable=true -jar C:\\Users\\vmuser\\Desktop\\agent.jar -jnlpUrl http://${masterIP}:8080/computer/${env.vmnod}/slave-agent.jnlp -secret ${secret} -workDir C:\\Users\\vmuser", false, true)

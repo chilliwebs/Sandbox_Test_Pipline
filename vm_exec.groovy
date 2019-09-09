@@ -4,7 +4,6 @@
 //---------------
 
 def vm_exec() {
-    bat 'schtasks /create /tn "shutdown timeout" /tr "shutdown.exe /s /f /t 0" /sc onidle /i 15'
     echo "**GOT VM ${env.vmid}**"
     echo "**GOT NODE ${env.vmnod}**"
     echo("Testing")
