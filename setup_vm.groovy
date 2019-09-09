@@ -13,6 +13,7 @@ def setup_vm() {
 
     // this enssure the vm is ready
     def vmIP = this.vmgmt.get_vm_ipaddr(machine.vmxurl)
+    echo("vm ip addr: ${vmIP}")
 
     def masterIP = InetAddress.localHost.hostAddress
     def secret = jenkins.model.Jenkins.getInstance().getComputer(env.vmnod).getJnlpMac()
