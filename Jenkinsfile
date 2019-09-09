@@ -14,7 +14,7 @@ pipeline {
     }
     stage('Prepare') {
       agent {
-        docker { image 'maven:7-alpine' }
+        docker { image 'maven:3.6.1-ibmjava-8-alpine' }
       }
       stages {
         stage('Build') {
