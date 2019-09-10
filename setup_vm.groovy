@@ -14,7 +14,8 @@ def setup_vm() {
 
     echo("setting up")
     this.vmgmt.restore_snapshot(machine.vmxurl, machine.snapshot)
-    dev.path.split(',').eachWithIndex({ path, idx -> 
+    dev.path.split(',').eachWithIndex({ path, idx ->
+        echo("usb_xhci.autoConnect.device${idx} = path:${path.replaceAll(/[-\.]/,"/")} autoclean:1")
         this.vmgmt.set_vmx_property(machine.vmxurl, "usb_xhci.autoConnect.device${idx}", "path:${path.replaceAll(/[-\.]/,"/")} autoclean:1")
     })
     this.vmgmt.start_vm(machine.vmxurl)
