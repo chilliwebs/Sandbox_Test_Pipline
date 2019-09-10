@@ -22,6 +22,7 @@ pipeline {
       stages {
         stage('Build') {
           steps {
+            sh "sudo chown 1000:1000 /var/maven"
             sh "mvn install"
             sh "mvn dependency:copy-dependencies"
 
