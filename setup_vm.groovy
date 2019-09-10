@@ -16,8 +16,11 @@ def setup_vm() {
 
     echo("setting up")
     this.vmgmt.restore_snapshot(machine.vmxurl, machine.snapshot)
-    dev.path.split(',').each({p -> echo(p.replaceAll(/[,\.]/,"/"))})
+    dev.path.split(',').each({p -> echo(p.replaceAll(/[-\.]/,"/"))})
     this.vmgmt.start_vm(machine.vmxurl)
+
+    echo(acgmt.get_ports(env.dev.split('-')[0]))
+    //acgmt.set_ports()
 
     // this enssure the vm is ready
     def vmIP = this.vmgmt.get_vm_ipaddr(machine.vmxurl)
