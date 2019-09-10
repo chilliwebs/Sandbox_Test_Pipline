@@ -29,7 +29,7 @@ def setup_vm() {
     def secret = jenkins.model.Jenkins.getInstance().getComputer(env.vmnod).getJnlpMac()
 
     this.vmgmt.run_script_on_vm('vmuser', 'password', machine.vmxurl, "", 
-        "schtasks /create /tn \"shutdown timeout\" /tr \"shutdown.exe /s /f /t 0\" /sc onidle /i 15")
+        "schtasks /create /tn \"shutdown timeout\" /tr \"shutdown.exe /s /f /t 0\" /sc onidle /i 30")
     this.vmgmt.run_script_on_vm('vmuser', 'password', machine.vmxurl, "", 
         "powershell -Command \"Invoke-WebRequest https://downloads.bose.com/ced/boseupdater/windows/BoseUpdaterInstaller_6.0.0.4388.exe -OutFile C:\\Users\\vmuser\\Desktop\\BoseUpdaterInstaller_6.0.0.4388.exe\"")
     this.vmgmt.run_script_on_vm('vmuser', 'password', machine.vmxurl, "",
