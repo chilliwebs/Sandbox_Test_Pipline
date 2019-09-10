@@ -18,7 +18,6 @@ def setup_vm() {
     this.vmgmt.restore_snapshot(machine.vmxurl, machine.snapshot)
     echo(dev.path)
     dev.path.split(',').each({p -> echo(p)})
-    acgmt.
     this.vmgmt.start_vm(machine.vmxurl)
 
     // this enssure the vm is ready
