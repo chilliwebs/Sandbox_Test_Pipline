@@ -39,7 +39,7 @@ def vm_exec() {
     bat "java -cp * -Dbrowser=\"${env.browser}\" org.junit.runner.JUnitCore com.chilliwebs.Sandbox_Test_Pipline.SimpleFWUpdateTest"
 
     echo('done!')
-    bat 'shutdown /s /f /t 0'
+    //bat 'shutdown /s /f /t 0'
 }
 
 vm_exec()
