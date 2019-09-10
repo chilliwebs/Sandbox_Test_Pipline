@@ -58,41 +58,43 @@ pipeline {
       steps {
         script {
           def tests = [
-            [os:'Windows10', browser: 'chrome'],
-            [os:'Windows10', browser: 'firefox'],
-            [os:'Windows10', browser: 'internet explorer'],
-            [os:'Windows10', browser: 'MicrosoftEdge'],
-            [os:'Windows10', browser: 'chrome'],
-            [os:'Windows10', browser: 'firefox'],
+            [os:'Windows10', browser: 'chrome', device: 'Baywolf'],
+            // [os:'Windows10', browser: 'firefox'],
+            // [os:'Windows10', browser: 'internet explorer'],
+            // [os:'Windows10', browser: 'MicrosoftEdge'],
+            // [os:'Windows10', browser: 'chrome'],
+            // [os:'Windows10', browser: 'firefox'],
           ]
 
           def tasks = [:]
           tests.eachWithIndex { test_conf, index ->
             def dowork = {
               lock(label:test_conf.os, quantity: 1, variable:'vmid') {
-                lock(label:'master_vmhost_node', quantity: 1, variable:'vmnod') {
-                  stage('Setup VM') {
-                    node {
-                      unstash "setup_vm.groovy"
-                      load "setup_vm.groovy"
+                lock(label:test_conf.device, quantity: 1, variable:'dev') {
+                  lock(label:'master_vmhost_node', quantity: 1, variable:'vmnod') {
+                    stage('Setup VM') {
+                      node {
+                        unstash "setup_vm.groovy"
+                        load "setup_vm.groovy"
+                      }
                     }
-                  }
-                  stage('VM Execution') {
-                    catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                      timeout(45) {
-                        node(env.vmnod) {
-                          withEnv(["browser=${test_conf.browser}"]) {
-                            unstash "vm_exec.groovy"
-                            load "vm_exec.groovy"
+                    stage('VM Execution') {
+                      catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                        timeout(45) {
+                          node(env.vmnod) {
+                            withEnv(["browser=${test_conf.browser}"]) {
+                              unstash "vm_exec.groovy"
+                              load "vm_exec.groovy"
+                            }
                           }
                         }
                       }
                     }
-                  }
-                  stage('Teardown VM') {
-                    node {
-                      unstash "teardown_vm.groovy"
-                      load "teardown_vm.groovy"
+                    stage('Teardown VM') {
+                      node {
+                        unstash "teardown_vm.groovy"
+                        load "teardown_vm.groovy"
+                      }
                     }
                   }
                 }

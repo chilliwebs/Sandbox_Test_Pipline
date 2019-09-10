@@ -1,12 +1,19 @@
 //--COMMON LIBS--
 this.vmgmt = evaluate dir('/var/jenkins_home/workspace/Vmware_Managment_Pipeline_master') { return readFile('common.groovy')  }
 this.machines_json = dir('/var/jenkins_home/workspace/Vmware_Managment_Pipeline_masterconf')  { return readFile('machines.json') }
+this.devices_json = dir('/var/jenkins_home/workspace/crohub_Managment_Pipeline_masterconf')  { return readFile('devices.json') }
 //---------------
 
 def setup_vm() {
     echo "**GOT VM ${env.vmid}**"
+    echo "**GOT Device ${env.dev}**"
     echo "**GOT NODE ${env.vmnod}**"
     def machine = new HashMap<>((new groovy.json.JsonSlurper()).parseText(this.machines_json)[env.vmid])
+    def dev = new HashMap<>((new groovy.json.JsonSlurper()).parseText(this.devices_json)[env.dev])
+
+    echo(dev)
+    echo(dev.path)
+
     echo("setting up")
     this.vmgmt.restore_snapshot(machine.vmxurl, machine.snapshot)
     this.vmgmt.start_vm(machine.vmxurl)
@@ -17,9 +24,6 @@ def setup_vm() {
 
     def masterIP = InetAddress.localHost.hostAddress
     def secret = jenkins.model.Jenkins.getInstance().getComputer(env.vmnod).getJnlpMac()
-
-    //stash "BoseUpdaterInstaller_6.0.0.4388.exe"
-    //bat "BoseUpdaterInstaller_6.0.0.4388.exe"
 
     this.vmgmt.run_script_on_vm('vmuser', 'password', machine.vmxurl, "", 
         "schtasks /create /tn \"shutdown timeout\" /tr \"shutdown.exe /s /f /t 0\" /sc onidle /i 15")
