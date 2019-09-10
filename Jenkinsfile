@@ -16,13 +16,13 @@ pipeline {
       agent {
         docker {
             image 'maven:3-alpine'
-            args '-u 1000:1000 -v maven-repo:/var/maven/.m2:z -e MAVEN_CONFIG=/var/maven/.m2 -e MAVEN_OPTS="-Duser.home=/var/maven"'
+            args '-v maven-repo:/var/maven/.m2:z -e MAVEN_CONFIG=/var/maven/.m2 -e MAVEN_OPTS="-Duser.home=/var/maven"'
         }
       }
       stages {
         stage('Build') {
           steps {
-            sh "sudo chown 1000:1000 /var/maven"
+            sh "chown 1000:1000 /var/maven"
             sh "mvn install"
             sh "mvn dependency:copy-dependencies"
 
