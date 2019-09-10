@@ -25,7 +25,8 @@ def setup_vm() {
         "schtasks /create /tn \"shutdown timeout\" /tr \"shutdown.exe /s /f /t 0\" /sc onidle /i 15")
     this.vmgmt.run_script_on_vm('vmuser', 'password', machine.vmxurl, "", 
         "powershell -Command \"Invoke-WebRequest https://downloads.bose.com/ced/boseupdater/windows/BoseUpdaterInstaller_6.0.0.4388.exe -OutFile C:\\Users\\vmuser\\Desktop\\BoseUpdaterInstaller_6.0.0.4388.exe\"")
-    this.vmgmt.run_exe_on_vm('vmuser', 'password', machine.vmxurl, "C:\\Users\\vmuser\\Desktop\\BoseUpdaterInstaller_6.0.0.4388.exe", false)
+    this.vmgmt.run_script_on_vm('vmuser', 'password', machine.vmxurl, "",
+        "start cmd /k C:\\Users\\vmuser\\Desktop\\BoseUpdaterInstaller_6.0.0.4388.exe", false)
     this.vmgmt.run_script_on_vm('vmuser', 'password', machine.vmxurl, "", 
         "powershell -Command \"Invoke-WebRequest http://${masterIP}:8080/jnlpJars/agent.jar -OutFile C:\\Users\\vmuser\\Desktop\\agent.jar\"")
     this.vmgmt.run_script_on_vm('vmuser', 'password', machine.vmxurl, "", 
