@@ -14,11 +14,11 @@ def setup_vm() {
 
     echo("setting up")
     this.vmgmt.restore_snapshot(machine.vmxurl, machine.snapshot)
-    dev.path.split(',').each({p -> echo(p.replaceAll(/[-\.]/,"/"))})
+    dev.path.split(',').eachWithIndex({ path, idx -> 
+        this.vmgmt.set_vmx_property(machine.vmxurl, "usb_xhci.autoConnect.device${idx}", "path:${path.replaceAll(/[-\.]/,"/")} autoclean:1")
+    })
     this.vmgmt.start_vm(machine.vmxurl)
-
-    echo(acgmt.get_port(env.dev.split('-')[0], env.dev.split('-')[1]))
-    echo(acgmt.aet_port(env.dev.split('-')[0], env.dev.split('-')[1], 'ON'))
+    this.acgmt.set_port(env.dev.split('-')[0], env.dev.split('-')[1], 'ON')
 
     // this enssure the vm is ready
     def vmIP = this.vmgmt.get_vm_ipaddr(machine.vmxurl)
