@@ -62,8 +62,10 @@ pipeline {
           def tests = [
             [os:'Windows10', browser: 'chrome', device: 'Baywolf'],
             [os:'Windows10', browser: 'firefox', device: 'Levi'],
-            [os:'Windows10', browser: 'internet explorer', device: 'Baywolf'],
-            [os:'Windows10', browser: 'MicrosoftEdge', device: 'Levi'],
+            //[os:'Windows10', browser: 'internet explorer', device: 'Baywolf'],
+            //[os:'Windows10', browser: 'MicrosoftEdge', device: 'Levi'],
+            [os:'Windows10', browser: 'chrome', device: 'Baywolf'],
+            [os:'Windows10', browser: 'firefox', device: 'Levi'],
             [os:'Windows10', browser: 'chrome', device: 'Frames'],
             [os:'Windows10', browser: 'firefox', device: 'Frames'],
           ]
