@@ -16,8 +16,7 @@ def setup_vm() {
 
     echo("setting up")
     this.vmgmt.restore_snapshot(machine.vmxurl, machine.snapshot)
-    echo(dev.path)
-    dev.path.split(',').each({p -> echo(p)})
+    dev.path.split(',').each({p -> echo(p.replaceAll(/[,\.]/,"/"))})
     this.vmgmt.start_vm(machine.vmxurl)
 
     // this enssure the vm is ready
