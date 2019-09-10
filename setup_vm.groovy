@@ -1,6 +1,7 @@
 //--COMMON LIBS--
 this.vmgmt = evaluate dir('/var/jenkins_home/workspace/Vmware_Managment_Pipeline_master') { return readFile('common.groovy')  }
 this.machines_json = dir('/var/jenkins_home/workspace/Vmware_Managment_Pipeline_masterconf')  { return readFile('machines.json') }
+this.acgmt = evaluate dir('/var/jenkins_home/workspace/crohub_Managment_Pipeline_master') { return readFile('common.groovy')  }
 this.devices_json = dir('/var/jenkins_home/workspace/crohub_Managment_Pipeline_masterconf')  { return readFile('devices.json') }
 //---------------
 
@@ -11,8 +12,8 @@ def setup_vm() {
     def machine = new HashMap<>((new groovy.json.JsonSlurper()).parseText(this.machines_json)[env.vmid])
     def dev = new HashMap<>((new groovy.json.JsonSlurper()).parseText(this.devices_json)[env.dev])
 
-    echo(dev)
     echo(dev.path)
+    dev.path.split(',').each( p => echo(p))
 
     echo("setting up")
     this.vmgmt.restore_snapshot(machine.vmxurl, machine.snapshot)
