@@ -26,7 +26,9 @@ def setup_vm() {
     this.vmgmt.run_script_on_vm('vmuser', 'password', machine.vmxurl, "", 
         "powershell -Command \"Invoke-WebRequest https://downloads.bose.com/ced/boseupdater/windows/BoseUpdaterInstaller_6.0.0.4388.exe -OutFile C:\\Users\\vmuser\\Desktop\\BoseUpdaterInstaller_6.0.0.4388.exe\"")
     this.vmgmt.run_script_on_vm('vmuser', 'password', machine.vmxurl, "",
-        "start cmd /k C:\\Users\\vmuser\\Desktop\\BoseUpdaterInstaller_6.0.0.4388.exe", false)
+        "powershell -Command \" Start-Process C:\\Users\\vmuser\\Desktop\\BoseUpdaterInstaller_6.0.0.4388.exe\" -verb RunAs", false, true)
+    sleep(5)
+    this.vmgmt.vncdo(machine.vmxurl, "key left key enter")
     this.vmgmt.run_script_on_vm('vmuser', 'password', machine.vmxurl, "", 
         "powershell -Command \"Invoke-WebRequest http://${masterIP}:8080/jnlpJars/agent.jar -OutFile C:\\Users\\vmuser\\Desktop\\agent.jar\"")
     this.vmgmt.run_script_on_vm('vmuser', 'password', machine.vmxurl, "", 
