@@ -61,9 +61,9 @@ pipeline {
         script {
           def tests = [
             [os:'Windows10', browser: 'chrome', device: 'Baywolf'],
-            // [os:'Windows10', browser: 'firefox'],
-            // [os:'Windows10', browser: 'internet explorer'],
-            // [os:'Windows10', browser: 'MicrosoftEdge'],
+            [os:'Windows10', browser: 'firefox', device: 'levi'],
+            [os:'Windows10', browser: 'internet explorer', device: 'Baywolf'],
+            [os:'Windows10', browser: 'MicrosoftEdge', device: 'levi'],
             // [os:'Windows10', browser: 'chrome'],
             // [os:'Windows10', browser: 'firefox'],
           ]
