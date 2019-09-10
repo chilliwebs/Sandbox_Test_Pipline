@@ -19,7 +19,7 @@ def setup_vm() {
         this.vmgmt.set_vmx_property(machine.vmxurl, "usb.autoConnect.device${idx}", "path:${path.replaceAll(/[-\.]/,"/")} autoclean:1")
     })
     this.vmgmt.start_vm(machine.vmxurl)
-    this.acgmt.set_port(env.dev.split('-')[0], env.dev.split('-')[1], 'ON')
+    //this.acgmt.set_port(env.dev.split('-')[0], env.dev.split('-')[1], 'ON')
 
     // this enssure the vm is ready
     def vmIP = this.vmgmt.get_vm_ipaddr(machine.vmxurl)

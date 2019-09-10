@@ -12,7 +12,7 @@ def teardown_vm() {
     echo("tearing down")
     Jenkins.instance.getNode(env.vmnod).getComputer().disconnect(hudson.slaves.OfflineCause.create(hudson.slaves.Messages._RetentionStrategy_Demand_OfflineIdle()))
     this.vmgmt.stop_vm(machine.vmxurl)
-    this.acgmt.set_port(env.dev.split('-')[0], env.dev.split('-')[1], 'OFF')
+    //this.acgmt.set_port(env.dev.split('-')[0], env.dev.split('-')[1], 'OFF')
 }
 
 teardown_vm()
