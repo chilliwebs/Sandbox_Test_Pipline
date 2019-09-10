@@ -19,8 +19,8 @@ def setup_vm() {
     dev.path.split(',').each({p -> echo(p.replaceAll(/[-\.]/,"/"))})
     this.vmgmt.start_vm(machine.vmxurl)
 
-    echo(acgmt.get_ports(env.dev.split('-')[0]))
-    //acgmt.set_ports()
+    echo(acgmt.get_port(env.dev.split('-')[0], env.dev.split('-')[1]))
+    echo(acgmt.aet_port(env.dev.split('-')[0], env.dev.split('-')[1], 'ON'))
 
     // this enssure the vm is ready
     def vmIP = this.vmgmt.get_vm_ipaddr(machine.vmxurl)
