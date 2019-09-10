@@ -12,8 +12,6 @@ def setup_vm() {
     def machine = new HashMap<>((new groovy.json.JsonSlurper()).parseText(this.machines_json)[env.vmid])
     def dev = new HashMap<>((new groovy.json.JsonSlurper()).parseText(this.devices_json)[env.dev])
 
-    
-
     echo("setting up")
     this.vmgmt.restore_snapshot(machine.vmxurl, machine.snapshot)
     dev.path.split(',').each({p -> echo(p.replaceAll(/[-\.]/,"/"))})
