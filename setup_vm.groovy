@@ -7,13 +7,11 @@ def setup_vm() {
     echo "**GOT VM ${env.vmid}**"
     echo "**GOT Device ${env.dev}**"
     echo "**GOT NODE ${env.vmnod}**"
-    
-    echo this.vmware.getMachinesJSON()
-    echo this.vmware.getMachinesJSON().get(env.vmid)
+
     def machine = this.vmware.getMachinesJSON().get(env.vmid)
     def dev = this.acro.getDevicesJSON().get(env.dev)
 
-    echo("setting up")
+    echo("setting up ${machine.vmxurl}")
     this.vmware.revertVM(machine.vmxurl, machine.snapshot)
     dev.path.split(',').eachWithIndex({ path, idx ->
         echo("usb.autoConnect.device${idx} = path:${path.replaceAll(/[-\.]/,"/")} autoclean:1")
