@@ -39,7 +39,6 @@ def vm_exec() {
     }
 
     def machine = this.vmware.getMachinesJSON().get(env.vmid)
-    this.acro.setPortInfo(env.dev.split('-')[0], (env.dev.split('-')[1]).toInteger(), 'ON')
     this.vmware.runScriptOnVM(machine.vmxurl,'vmuser', 'password', "", 
         "powershell -Command \"Invoke-WebRequest https://downloads.bose.com/ced/boseupdater/windows/BoseUpdaterInstaller_6.0.0.4388.exe -OutFile C:\\Users\\vmuser\\Desktop\\BoseUpdaterInstaller_6.0.0.4388.exe\"")
     this.vmware.runScriptOnVM(machine.vmxurl,'vmuser', 'password', "",
@@ -47,6 +46,7 @@ def vm_exec() {
     sleep(10)
     this.vmware.sendKeysToVM(machine.vmxurl, "left enter")
 
+    this.acro.setPortInfo(env.dev.split('-')[0], (env.dev.split('-')[1]).toInteger(), 'ON')
     bat "java -cp * -Dbrowser=\"${env.browser}\" org.junit.runner.JUnitCore com.chilliwebs.Sandbox_Test_Pipline.SimpleFWUpdateTest"
 
     echo('done!')
