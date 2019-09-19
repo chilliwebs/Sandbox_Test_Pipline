@@ -12,12 +12,14 @@ def setup_vm() {
     def dev = this.acro.getDevicesJSON().get(env.dev)
 
     echo("setting up ${machine.vmxurl}")
+    this.acro.setPortInfo(env.dev.split('-')[0], (env.dev.split('-')[1]).toInteger(), 'ON')
     this.vmware.revertVM(machine.vmxurl, machine.snapshot)
     dev.path.split(',').eachWithIndex({ path, idx ->
         echo("usb_xhci.autoConnect.device${idx} = path:${path.replaceAll(/[-\.]/,"/")} autoclean:1")
         this.vmware.setVMProperty(machine.vmxurl, "usb_xhci.autoConnect.device${idx}", "path:${path.replaceAll(/[-\.]/,"/")} autoclean:1")
     })
     this.vmware.startVM(machine.vmxurl)
+    this.acro.setPortInfo(env.dev.split('-')[0], (env.dev.split('-')[1]).toInteger(), 'OFF')
 
     def masterIP = "172.17.0.1" //InetAddress.localHost.hostAddress
     def secret = jenkins.model.Jenkins.getInstance().getComputer(env.vmnod).getJnlpMac()
