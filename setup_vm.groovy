@@ -9,6 +9,7 @@ def setup_vm() {
     echo "**GOT NODE ${env.vmnod}**"
     
     echo this.vmware.getMachinesJSON()
+    echo this.vmware.getMachinesJSON().get(env.vmid)
     def machine = this.vmware.getMachinesJSON().get(env.vmid)
     def dev = this.acro.getDevicesJSON().get(env.dev)
 
