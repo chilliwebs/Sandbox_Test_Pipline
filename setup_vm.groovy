@@ -10,8 +10,6 @@ def setup_vm() {
     echo "**GOT Device ${env.dev}**"
     echo "**GOT NODE ${env.vmnod}**"
 
-    echo JsonOutput.toJson(this.vmware.getMachinesJSON())
-    echo JsonOutput.toJson(this.vmware.getMachinesJSON().get(env.vmid))
     def machine = this.vmware.getMachinesJSON().get(env.vmid)
     def dev = this.acro.getDevicesJSON().get(env.dev)
 
