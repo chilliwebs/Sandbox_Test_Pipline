@@ -20,7 +20,7 @@ def setup_vm() {
         this.vmware.setVMProperty(machine.vmxurl, "usb.autoConnect.device${idx}", "path:${path.replaceAll(/[-\.]/,"/")} autoclean:1")
     })
     this.vmware.startVM(machine.vmxurl)
-    this.acro.setPortInfo(env.dev.split('-')[0], env.dev.split('-')[1], 'ON')
+    this.acro.setPortInfo(env.dev.split('-')[0], (env.dev.split('-')[1]).toInteger(), 'ON')
 
     // this enssure the vm is ready
     def vmIP = this.vmware.getIpAddr(machine.vmxurl)
