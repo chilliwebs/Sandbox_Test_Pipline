@@ -16,8 +16,8 @@ def setup_vm() {
     echo("setting up ${machine.vmxurl}")
     this.vmware.revertVM(machine.vmxurl, machine.snapshot)
     dev.path.split(',').eachWithIndex({ path, idx ->
-        echo("usb.autoConnect.device${idx} = path:${path.replaceAll(/[-\.]/,"/")} autoclean:1")
-        this.vmware.setVMProperty(machine.vmxurl, "usb.autoConnect.device${idx}", "path:${path.replaceAll(/[-\.]/,"/")} autoclean:1")
+        echo("usb_xhci.autoConnect.device${idx} = path:${path.replaceAll(/[-\.]/,"/")} autoclean:1")
+        this.vmware.setVMProperty(machine.vmxurl, "usb_xhci.autoConnect.device${idx}", "path:${path.replaceAll(/[-\.]/,"/")} autoclean:1")
     })
     this.vmware.startVM(machine.vmxurl)
     this.acro.setPortInfo(env.dev.split('-')[0], (env.dev.split('-')[1]).toInteger(), 'ON')
