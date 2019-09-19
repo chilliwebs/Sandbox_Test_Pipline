@@ -20,7 +20,7 @@ def setup_vm() {
         this.vmware.setVMProperty(machine.vmxurl, "usb.autoConnect.device${idx}", "path:${path.replaceAll(/[-\.]/,"/")} autoclean:1")
     })
     this.vmware.startVM(machine.vmxurl)
-    //this.acro.setPortInfo(env.dev.split('-')[0], env.dev.split('-')[1], 'ON')
+    this.acro.setPortInfo(env.dev.split('-')[0], env.dev.split('-')[1], 'ON')
 
     // this enssure the vm is ready
     def vmIP = this.vmware.getIpAddr(machine.vmxurl)
@@ -35,7 +35,7 @@ def setup_vm() {
         "powershell -Command \"Invoke-WebRequest https://downloads.bose.com/ced/boseupdater/windows/BoseUpdaterInstaller_6.0.0.4388.exe -OutFile C:\\Users\\vmuser\\Desktop\\BoseUpdaterInstaller_6.0.0.4388.exe\"")
     this.vmware.runScriptOnVM(machine.vmxurl,'vmuser', 'password', "",
         "powershell -Command \"Start-Process C:\\Users\\vmuser\\Desktop\\BoseUpdaterInstaller_6.0.0.4388.exe\" -verb RunAs", false, true)
-    sleep(15)
+    sleep(10)
     this.vmware.sendKeysToVM(machine.vmxurl, "left enter")
     this.vmware.runScriptOnVM(machine.vmxurl,'vmuser', 'password', "", 
         "powershell -Command \"Invoke-WebRequest http://${masterIP}:8080/jnlpJars/agent.jar -OutFile C:\\Users\\vmuser\\Desktop\\agent.jar\"")

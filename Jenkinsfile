@@ -67,7 +67,7 @@ pipeline {
             [os:'Windows10', browser: 'chrome', device: 'Baywolf'],
             [os:'Windows10', browser: 'firefox', device: 'Levi'],
             [os:'Windows10', browser: 'chrome', device: 'Celine'],
-            [os:'Windows10', browser: 'firefox', device: 'Celine'],
+            //[os:'Windows10', browser: 'firefox', device: 'Celine'],
           ]
 
           def tasks = [:]
