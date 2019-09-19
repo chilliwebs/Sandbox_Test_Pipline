@@ -29,17 +29,17 @@ def setup_vm() {
     def masterIP = InetAddress.localHost.hostAddress
     def secret = jenkins.model.Jenkins.getInstance().getComputer(env.vmnod).getJnlpMac()
 
-    this.vmware.sendKeysToVM(machine.vmxurl,'vmuser', 'password', "", 
+    this.vmware.runScriptOnVM(machine.vmxurl,'vmuser', 'password', "", 
         "schtasks /create /tn \"shutdown timeout\" /tr \"shutdown.exe /s /f /t 0\" /sc onidle /i 30")
-    this.vmware.sendKeysToVM(machine.vmxurl,'vmuser', 'password', "", 
+    this.vmware.runScriptOnVM(machine.vmxurl,'vmuser', 'password', "", 
         "powershell -Command \"Invoke-WebRequest https://downloads.bose.com/ced/boseupdater/windows/BoseUpdaterInstaller_6.0.0.4388.exe -OutFile C:\\Users\\vmuser\\Desktop\\BoseUpdaterInstaller_6.0.0.4388.exe\"")
-    this.vmware.sendKeysToVM(machine.vmxurl,'vmuser', 'password', "",
+    this.vmware.runScriptOnVM(machine.vmxurl,'vmuser', 'password', "",
         "powershell -Command \"Start-Process C:\\Users\\vmuser\\Desktop\\BoseUpdaterInstaller_6.0.0.4388.exe\" -verb RunAs", false, true)
     sleep(15)
     this.vmware.sendKeysToVM(machine.vmxurl, "left enter")
-    this.vmware.sendKeysToVM(machine.vmxurl,'vmuser', 'password', "", 
+    this.vmware.runScriptOnVM(machine.vmxurl,'vmuser', 'password', "", 
         "powershell -Command \"Invoke-WebRequest http://${masterIP}:8080/jnlpJars/agent.jar -OutFile C:\\Users\\vmuser\\Desktop\\agent.jar\"")
-    this.vmware.sendKeysToVM(machine.vmxurl,'vmuser', 'password', "", 
+    this.vmware.runScriptOnVM(machine.vmxurl,'vmuser', 'password', "", 
         "start cmd /k java -Dhudson.util.ProcessTree.disable=true -jar C:\\Users\\vmuser\\Desktop\\agent.jar -jnlpUrl http://${masterIP}:8080/computer/${env.vmnod}/slave-agent.jnlp -secret ${secret} -workDir C:\\Users\\vmuser", false, true)
     
     return machine
