@@ -1,3 +1,5 @@
+import groovy.json.JsonOutput
+
 //--COMMON LIBS--
 this.vmware = evaluate 'http://172.17.0.1:8765/api.groovy'.toURL().text
 this.acro = evaluate 'http://172.17.0.1:9876/api.groovy'.toURL().text
@@ -8,6 +10,8 @@ def setup_vm() {
     echo "**GOT Device ${env.dev}**"
     echo "**GOT NODE ${env.vmnod}**"
 
+    echo JsonOutput.toJson(this.vmware.getMachinesJSON())
+    echo JsonOutput.toJson(this.vmware.getMachinesJSON().get(env.vmid))
     def machine = this.vmware.getMachinesJSON().get(env.vmid)
     def dev = this.acro.getDevicesJSON().get(env.dev)
 
