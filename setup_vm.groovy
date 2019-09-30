@@ -23,6 +23,8 @@ def setup_vm() {
     def masterIP = "172.17.0.1" //InetAddress.localHost.hostAddress
     def secret = jenkins.model.Jenkins.getInstance().getComputer(env.vmnod).getJnlpMac()
 
+    //env.BRANCH_NAME
+
     this.vmware.runScriptOnVM(machine.vmxurl,'vmuser', 'password', "", 
         "schtasks /create /tn \"shutdown timeout\" /tr \"shutdown.exe /s /f /t 0\" /sc onidle /i 30")
     this.vmware.runScriptOnVM(machine.vmxurl,'vmuser', 'password', "", 
