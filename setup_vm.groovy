@@ -28,7 +28,7 @@ def setup_vm() {
     this.vmware.runScriptOnVM(machine.vmxurl,'vmuser', 'password', "", 
         "powershell -Command \"Invoke-WebRequest http://${masterIP}:8080/jnlpJars/agent.jar -OutFile C:\\Users\\vmuser\\Desktop\\agent.jar\"")
     this.vmware.runScriptOnVM(machine.vmxurl,'vmuser', 'password', "", 
-        "start cmd /k java -Dhudson.util.ProcessTree.disable=true -jar C:\\Users\\vmuser\\Desktop\\agent.jar -jnlpUrl http://${masterIP}:8080/computer/${env.vmnod}/slave-agent.jnlp -secret ${secret} -workDir C:\\Users\\vmuser", false, true)
+        "start cmd /k java -Dhudson.util.ProcessTree.disable=true -Dhudson.slaves.ChannelPinger.pingIntervalSeconds=60 -jar C:\\Users\\vmuser\\Desktop\\agent.jar -jnlpUrl http://${masterIP}:8080/computer/${env.vmnod}/slave-agent.jnlp -secret ${secret} -workDir C:\\Users\\vmuser", false, true)
     
     return machine
 }

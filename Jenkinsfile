@@ -6,9 +6,7 @@ pipeline {
       steps {
         script {
           load 'configure.groovy'
-          stash "setup_vm.groovy"
-          stash "vm_exec.groovy"
-          stash "teardown_vm.groovy"
+          stash "*.groovy"
         }
       }
     }
@@ -27,29 +25,12 @@ pipeline {
 
             sh "chown 1000:1000 -R target"
 
-            stash "chromedriver.exe"
-            stash "geckodriver.exe"
-            stash "IEDriverServer.exe"
-            stash "MicrosoftWebDriver.exe"
+            stash "*.exe"
 
             dir('target') {
-              stash "Sandbox_Test_Pipline-1.0-SNAPSHOT-tests.jar"
+              stash "*.jar"
               dir('dependency') {
-                stash "guava-25.0-jre.jar"
-                stash "hamcrest-core-1.3.jar"
-                stash "junit-4.11.jar"
-                stash "okhttp-3.11.0.jar"
-                stash "okio-1.14.0.jar"
-                stash "selenium-api-3.141.59.jar"
-                stash "selenium-remote-driver-3.141.59.jar"
-                stash "selenium-support-3.141.59.jar"
-
-                stash "selenium-chrome-driver-3.141.59.jar"
-                stash "selenium-edge-driver-3.141.59.jar"
-                stash "selenium-firefox-driver-3.141.59.jar"
-                stash "selenium-ie-driver-3.141.59.jar"
-                stash "selenium-opera-driver-3.141.59.jar"
-                stash "selenium-safari-driver-3.141.59.jar"
+                stash "*.jar"
               }
             }
           }
@@ -62,8 +43,8 @@ pipeline {
           def tests = [
             [os:'Windows10', browser: 'chrome', device: 'Baywolf'],
             [os:'Windows10', browser: 'firefox', device: 'Levi'],
-            //[os:'Windows10', browser: 'internet explorer', device: 'Baywolf'],
-            //[os:'Windows10', browser: 'MicrosoftEdge', device: 'Levi'],
+            [os:'Windows10', browser: 'internet explorer', device: 'Baywolf'],
+            [os:'Windows10', browser: 'MicrosoftEdge', device: 'Levi'],
             //[os:'Windows10', browser: 'chrome', device: 'Baywolf'],
             //[os:'Windows10', browser: 'firefox', device: 'Levi'],
             [os:'Windows10', browser: 'chrome', device: 'Celine'],

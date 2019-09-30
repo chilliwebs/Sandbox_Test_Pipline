@@ -11,31 +11,19 @@ def vm_exec() {
     echo("Testing")
     echo('were in!')
 
-    unstash "Sandbox_Test_Pipline-1.0-SNAPSHOT-tests.jar"
-    unstash "guava-25.0-jre.jar"
-    unstash "hamcrest-core-1.3.jar"
-    unstash "junit-4.11.jar"
-    unstash "okhttp-3.11.0.jar"
-    unstash "okio-1.14.0.jar"
-    unstash "selenium-api-3.141.59.jar"
-    unstash "selenium-remote-driver-3.141.59.jar"
-    unstash "selenium-support-3.141.59.jar"
+    unstash "*.jar"
 
     if(env.browser == "chrome") {
-        unstash "chromedriver.exe"
-        unstash "selenium-chrome-driver-3.141.59.jar"
+        unstash "chromedriver.exe, selenium-chrome-driver-3.141.59.jar"
     }
     if(env.browser == "firefox") {
-        unstash "geckodriver.exe"
-        unstash "selenium-firefox-driver-3.141.59.jar"
+        unstash "geckodriver.exe, selenium-firefox-driver-3.141.59.jar"
     }
     if(env.browser == "internet explorer") {
-        unstash "IEDriverServer.exe"
-        unstash "selenium-ie-driver-3.141.59.jar"
+        unstash "IEDriverServer.exe, selenium-ie-driver-3.141.59.jar"
     }
     if(env.browser == "MicrosoftEdge") {
-        unstash "MicrosoftWebDriver.exe"
-        unstash "selenium-edge-driver-3.141.59.jar"
+        unstash "MicrosoftWebDriver.exe, selenium-edge-driver-3.141.59.jar"
     }
 
     def machine = this.vmware.getMachinesJSON().get(env.vmid)
