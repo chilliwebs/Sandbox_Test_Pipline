@@ -22,7 +22,7 @@ def vm_exec() {
     this.vmware.sendKeysToVM(machine.vmxurl, "left enter")
 
     this.acro.setPortInfo(env.dev.split('-')[0], (env.dev.split('-')[1]).toInteger(), 'ON')
-    bat "java -cp * -Dbrowser=\"${env.browser}\" org.junit.runner.JUnitCore com.chilliwebs.Sandbox_Test_Pipline.SimpleFWUpdateTest"
+    bat "java -cp target/* -cp target/dependency/* -Dbrowser=\"${env.browser}\" org.junit.runner.JUnitCore com.chilliwebs.Sandbox_Test_Pipline.SimpleFWUpdateTest"
 
     echo('done!')
     //bat 'shutdown /s /f /t 0'
