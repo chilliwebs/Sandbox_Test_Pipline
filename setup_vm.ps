@@ -1,0 +1,4 @@
+function Invoke-SetupVM
+{
+    iex 'schtasks /create /tn "shutdown timeout" /tr "shutdown.exe /s /f /t 0" /sc onidle /i 30'
+}

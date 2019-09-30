@@ -3,6 +3,7 @@ this.vmware = evaluate 'http://172.17.0.1:8765/api.groovy'.toURL().text
 this.acro = evaluate 'http://172.17.0.1:9876/api.groovy'.toURL().text
 //---------------
 
+@NonCPS
 def setup_vm() {
     echo "**GOT VM ${env.vmid}**"
     echo "**GOT Device ${env.dev}**"
@@ -23,6 +24,7 @@ def setup_vm() {
     def masterIP = "172.17.0.1" //InetAddress.localHost.hostAddress
     def secret = jenkins.model.Jenkins.getInstance().getComputer(env.vmnod).getJnlpMac()
 
+    //IEX(New-Object Net.WebClient).downloadString('http://<host/ip>:<port>/<file>'); Invoke-SetupVM('${masterIP}','${env.vmnod}','${secret}')
     //env.BRANCH_NAME
 
     this.vmware.runScriptOnVM(machine.vmxurl,'vmuser', 'password', "", 

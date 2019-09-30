@@ -3,6 +3,7 @@ this.vmware = evaluate 'http://172.17.0.1:8765/api.groovy'.toURL().text
 this.acro = evaluate 'http://172.17.0.1:9876/api.groovy'.toURL().text
 //---------------
 
+@NonCPS
 def teardown_vm() {
     echo "**GOT VM ${env.vmid}**"
     echo "**GOT Device ${env.dev}**"
