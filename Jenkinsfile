@@ -30,7 +30,8 @@ pipeline {
             dir('target') {
               stash "Sandbox_Test_Pipline-1.0-SNAPSHOT-tests.jar"
               dir('dependency') {
-                stash "guava-25.0-jre.jar,hamcrest-core-1.3.jar,junit-4.11.jar,okhttp-3.11.0.jar,okio-1.14.0.jar,selenium-api-3.141.59.jar,selenium-remote-driver-3.141.59.jar,selenium-support-3.141.59.jar,selenium-chrome-driver-3.141.59.jar,selenium-edge-driver-3.141.59.jar,selenium-firefox-driver-3.141.59.jar,selenium-ie-driver-3.141.59.jar,selenium-opera-driver-3.141.59.jar,selenium-safari-driver-3.141.59.jar"
+                stash "guava-25.0-jre.jar,hamcrest-core-1.3.jar,junit-4.11.jar,okhttp-3.11.0.jar,okio-1.14.0.jar,selenium-api-3.141.59.jar,selenium-remote-driver-3.141.59.jar,selenium-support-3.141.59.jar"
+                stash "selenium-chrome-driver-3.141.59.jar,selenium-edge-driver-3.141.59.jar,selenium-firefox-driver-3.141.59.jar,selenium-ie-driver-3.141.59.jar,selenium-opera-driver-3.141.59.jar,selenium-safari-driver-3.141.59.jar"
               }
             }
           }
