@@ -6,7 +6,7 @@ pipeline {
       steps {
         script {
           load 'configure.groovy'
-          stash "setup_vm.groovy,vm_exec.groovy,teardown_vm.groovy"
+          stash name: "scripts", includes: "*.groovy"
         }
       }
     }
@@ -25,13 +25,12 @@ pipeline {
 
             sh "chown 1000:1000 -R target"
 
-            stash "chromedriver.exe,geckodriver.exe,IEDriverServer.exe,MicrosoftWebDriver.exe"
+            stash name: "drivers", includes: "*.exe"
 
             dir('target') {
-              stash "Sandbox_Test_Pipline-1.0-SNAPSHOT-tests.jar"
+              stash name: "jars", includes: "Sandbox_Test_Pipline-1.0-SNAPSHOT-tests.jar"
               dir('dependency') {
-                stash "guava-25.0-jre.jar,hamcrest-core-1.3.jar,junit-4.11.jar,okhttp-3.11.0.jar,okio-1.14.0.jar,selenium-api-3.141.59.jar,selenium-remote-driver-3.141.59.jar,selenium-support-3.141.59.jar"
-                stash "selenium-chrome-driver-3.141.59.jar,selenium-edge-driver-3.141.59.jar,selenium-firefox-driver-3.141.59.jar,selenium-ie-driver-3.141.59.jar,selenium-opera-driver-3.141.59.jar,selenium-safari-driver-3.141.59.jar"
+                stash name: "jars", includes: "*.jar"
               }
             }
           }
@@ -60,7 +59,7 @@ pipeline {
                   lock(label:'master_vmhost_node', quantity: 1, variable:'vmnod') {
                     stage('Setup VM') {
                       node {
-                        unstash "setup_vm.groovy"
+                        unstash name: "scripts", includes: "setup_vm.groovy"
                         load "setup_vm.groovy"
                       }
                     }
@@ -69,7 +68,7 @@ pipeline {
                         timeout(45) {
                           node(env.vmnod) {
                             withEnv(["browser=${test_conf.browser}"]) {
-                              unstash "vm_exec.groovy"
+                              unstash name: "scripts", includes: "vm_exec.groovy"
                               load "vm_exec.groovy"
                             }
                           }
@@ -78,7 +77,7 @@ pipeline {
                     }
                     stage('Teardown VM') {
                       node {
-                        unstash "teardown_vm.groovy"
+                        unstash name: "scripts", includes: "teardown_vm.groovy"
                         load "teardown_vm.groovy"
                       }
                     }
