@@ -6,7 +6,7 @@ pipeline {
       steps {
         script {
           load 'configure.groovy'
-          stash "*.groovy"
+          stash "setup_vm.groovy,vm_exec.groovy,teardown_vm.groovy"
         }
       }
     }
@@ -25,12 +25,12 @@ pipeline {
 
             sh "chown 1000:1000 -R target"
 
-            stash "*.exe"
+            stash "chromedriver.exe,geckodriver.exe,IEDriverServer.exe,MicrosoftWebDriver.exe"
 
             dir('target') {
-              stash "*.jar"
+              stash "Sandbox_Test_Pipline-1.0-SNAPSHOT-tests.jar"
               dir('dependency') {
-                stash "*.jar"
+                stash "guava-25.0-jre.jar,hamcrest-core-1.3.jar,junit-4.11.jar,okhttp-3.11.0.jar,okio-1.14.0.jar,selenium-api-3.141.59.jar,selenium-remote-driver-3.141.59.jar,selenium-support-3.141.59.jar,selenium-chrome-driver-3.141.59.jar,selenium-edge-driver-3.141.59.jar,selenium-firefox-driver-3.141.59.jar,selenium-ie-driver-3.141.59.jar,selenium-opera-driver-3.141.59.jar,selenium-safari-driver-3.141.59.jar"
               }
             }
           }
