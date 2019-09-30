@@ -11,20 +11,7 @@ def vm_exec() {
     echo("Testing")
     echo('were in!')
 
-    unstash name: "jars"
-
-    if(env.browser == "chrome") {
-        unstash name: "drivers", includes: "chromedriver.exe"
-    }
-    if(env.browser == "firefox") {
-        unstash name: "drivers", includes: "geckodriver.exe"
-    }
-    if(env.browser == "internet explorer") {
-        unstash name: "drivers", includes: "IEDriverServer.exe"
-    }
-    if(env.browser == "MicrosoftEdge") {
-        unstash name: "drivers", includes: "MicrosoftWebDriver.exe"
-    }
+    unstash name: "binaries"
 
     def machine = this.vmware.getMachinesJSON().get(env.vmid)
     this.vmware.runScriptOnVM(machine.vmxurl,'vmuser', 'password', "", 

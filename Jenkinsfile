@@ -25,14 +25,7 @@ pipeline {
 
             sh "chown 1000:1000 -R target"
 
-            stash name: "drivers", includes: "*.exe"
-
-            dir('target') {
-              stash name: "jars", includes: "Sandbox_Test_Pipline-1.0-SNAPSHOT-tests.jar"
-              dir('dependency') {
-                stash name: "jars", includes: "*.jar"
-              }
-            }
+            stash name: "binaries", includes: "**/*.jar,*.exe"
           }
         }
       }
@@ -59,7 +52,7 @@ pipeline {
                   lock(label:'master_vmhost_node', quantity: 1, variable:'vmnod') {
                     stage('Setup VM') {
                       node {
-                        unstash name: "scripts", includes: "setup_vm.groovy"
+                        unstash "scripts"
                         load "setup_vm.groovy"
                       }
                     }
@@ -68,7 +61,7 @@ pipeline {
                         timeout(45) {
                           node(env.vmnod) {
                             withEnv(["browser=${test_conf.browser}"]) {
-                              unstash name: "scripts", includes: "vm_exec.groovy"
+                              unstash "scripts"
                               load "vm_exec.groovy"
                             }
                           }
@@ -77,7 +70,7 @@ pipeline {
                     }
                     stage('Teardown VM') {
                       node {
-                        unstash name: "scripts", includes: "teardown_vm.groovy"
+                        unstash "scripts"
                         load "teardown_vm.groovy"
                       }
                     }
