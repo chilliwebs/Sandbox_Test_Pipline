@@ -13,5 +13,5 @@ function Invoke-SetupVM {
     Start-Process -FilePath schtasks -ArgumentList "/run","/tn","Elevated"
     Invoke-WebRequest "http://${masterIP}:8080/jnlpJars/agent.jar" -OutFile "$HOME\\Desktop\\agent.jar"
     Start-Process -FilePath cmd -ArgumentList "/k","java","-Dhudson.util.ProcessTree.disable=true", "-Dhudson.slaves.ChannelPinger.pingIntervalSeconds=60", "-jar", "$HOME\\Desktop\\agent.jar", "-jnlpUrl", "http://${masterIP}:8080/computer/${vmnod}/slave-agent.jnlp", "-secret", "$secret", "-workDir", "$HOME"
-    Set-Content -Path $HOME\\elevated.bat -Value ""
+    #Set-Content -Path $HOME\\elevated.bat -Value ""
 }
