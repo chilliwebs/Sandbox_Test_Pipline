@@ -9,14 +9,14 @@ function Invoke-SetupVM {
 
     Set-Content -Path $HOME\\elevated.bat -Value "$HOME\Desktop\BoseUpdaterInstaller.exe"
     Invoke-WebRequest $installerURL -OutFile $HOME\\Desktop\\BoseUpdaterInstaller.exe
-    Start-Process -FilePath schtasks -ArgumentList "/create","/tn","shutdown timeout","/tr","shutdown.exe /s /f /t 0","/sc","onidle","/i","30"
+    Start-Process -FilePath schtasks -ArgumentList "/create","/tn","shutdown timeout","/tr","shutdown.exe /s /f /t 0","/sc","onidle","/i","60"
     
     Start-ScheduledTask -TaskName "Elevated"
-    $timeout = 60 ## seconds
+    $timeout = 360 ## seconds
     $timer = [Diagnostics.Stopwatch]::StartNew()
     while (((Get-ScheduledTask -TaskName 'Elevated').State -ne 'Ready') -and ($timer.Elapsed.TotalSeconds -lt $timeout)) {    
         Write-Host -Message "Waiting for elevated task..."
-        Start-Sleep -Seconds 3   
+        Start-Sleep -Seconds 5   
     }
     $timer.Stop()
     Write-Host -Message "Waited [$($timer.Elapsed.TotalSeconds)] seconds for elevated task"
