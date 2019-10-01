@@ -7,10 +7,10 @@ function Invoke-SetupVM {
     #left mouse click
     [W.U32]::mouse_event(0x02 -bor 0x04 -bor 0x8000 -bor 0x01, 0.5*65535, -0.5*65535, 0, 0);
 
-    Invoke-WebRequest $installerURL -OutFile $HOME\\Desktop\\BoseUpdaterInstaller.exe
-    Start-Process -FilePath schtasks -ArgumentList "/create","/tn","shutdown timeout","/tr","shutdown.exe /s /f /t 0","/sc","onidle","/i","30"
     Set-Content -Path $HOME\\elevated.bat -Value "$HOME\\Desktop\\BoseUpdaterInstaller.exe"
     Start-Sleep -s 15
+    Invoke-WebRequest $installerURL -OutFile $HOME\\Desktop\\BoseUpdaterInstaller.exe
+    Start-Process -FilePath schtasks -ArgumentList "/create","/tn","shutdown timeout","/tr","shutdown.exe /s /f /t 0","/sc","onidle","/i","30"
     Start-Process -FilePath schtasks -ArgumentList "/run","/tn","Elevated"
     Invoke-WebRequest "http://${masterIP}:8080/jnlpJars/agent.jar" -OutFile "$HOME\\Desktop\\agent.jar"
     Start-Process -FilePath cmd -ArgumentList "/k","java","-Dhudson.util.ProcessTree.disable=true", "-Dhudson.slaves.ChannelPinger.pingIntervalSeconds=60", "-jar", "$HOME\\Desktop\\agent.jar", "-jnlpUrl", "http://${masterIP}:8080/computer/${vmnod}/slave-agent.jnlp", "-secret", "$secret", "-workDir", "$HOME"
