@@ -26,7 +26,7 @@ def setup_vm() {
 
     this.vmware.runScriptOnVM(machine.vmxurl,'vmuser', 'password', "", 
         "powershell -Command \"IEX(New-Object Net.WebClient).downloadString('https://raw.githubusercontent.com/chilliwebs/Sandbox_Test_Pipline/${env.BRANCH_NAME}/setup_vm.ps');" +
-        "Invoke-SetupVM -masterIP '${masterIP}' -vmnod '${env.vmnod}' -secret '${secret}' -installerURL '${installerURL}'\"", false)
+        "Invoke-SetupVM -masterIP '${masterIP}' -vmnod '${env.vmnod}' -secret '${secret}' -installerURL '${installerURL}'\"", false, true)
 
     // this.vmware.runScriptOnVM(machine.vmxurl,'vmuser', 'password', "", 
     //     "schtasks /create /tn \"shutdown timeout\" /tr \"shutdown.exe /s /f /t 0\" /sc onidle /i 30")
