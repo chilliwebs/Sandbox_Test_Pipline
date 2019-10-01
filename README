@@ -1,0 +1,2 @@
+# when setting up the windows machines make sure you create the following task before creating the snapshot
+# schtasks /create /tn Elevated /tr %homedrive%%homepath%\elevated.bat /ru vmuser /rp password /rl highest /sc onstart
