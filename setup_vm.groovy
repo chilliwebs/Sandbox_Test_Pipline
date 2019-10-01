@@ -20,18 +20,19 @@ def setup_vm() {
     })
     this.vmware.startVM(machine.vmxurl)
 
+    def installerURL = "https://downloads.bose.com/ced/boseupdater/windows/BoseUpdaterInstaller_6.0.0.4388.exe"
     def masterIP = "172.17.0.1" //InetAddress.localHost.hostAddress
     def secret = jenkins.model.Jenkins.getInstance().getComputer(env.vmnod).getJnlpMac()
 
-    //IEX(New-Object Net.WebClient).downloadString('http://<host/ip>:<port>/<file>'); Invoke-SetupVM('${masterIP}','${env.vmnod}','${secret}')
-    //env.BRANCH_NAME
+    this.vmware.runScriptOnVM(machine.vmxurl,'vmuser', 'password', "", 
+        "IEX(New-Object Net.WebClient).downloadString(\"https://raw.githubusercontent.com/chilliwebs/Sandbox_Test_Pipline/${env.BRANCH_NAME}/setup_vm.ps\"); Invoke-SetupVM -masterIP \"${masterIP}\" -vmnod \"${env.vmnod}\" -secret \"${secret}\" -installerURL \"${installerURL}\"")
 
-    this.vmware.runScriptOnVM(machine.vmxurl,'vmuser', 'password', "", 
-        "schtasks /create /tn \"shutdown timeout\" /tr \"shutdown.exe /s /f /t 0\" /sc onidle /i 30")
-    this.vmware.runScriptOnVM(machine.vmxurl,'vmuser', 'password', "", 
-        "powershell -Command \"Invoke-WebRequest http://${masterIP}:8080/jnlpJars/agent.jar -OutFile C:\\Users\\vmuser\\Desktop\\agent.jar\"")
-    this.vmware.runScriptOnVM(machine.vmxurl,'vmuser', 'password', "", 
-        "start cmd /k java -Dhudson.util.ProcessTree.disable=true -Dhudson.slaves.ChannelPinger.pingIntervalSeconds=60 -jar C:\\Users\\vmuser\\Desktop\\agent.jar -jnlpUrl http://${masterIP}:8080/computer/${env.vmnod}/slave-agent.jnlp -secret ${secret} -workDir C:\\Users\\vmuser", false, true)
+    // this.vmware.runScriptOnVM(machine.vmxurl,'vmuser', 'password', "", 
+    //     "schtasks /create /tn \"shutdown timeout\" /tr \"shutdown.exe /s /f /t 0\" /sc onidle /i 30")
+    // this.vmware.runScriptOnVM(machine.vmxurl,'vmuser', 'password', "", 
+    //     "powershell -Command \"Invoke-WebRequest http://${masterIP}:8080/jnlpJars/agent.jar -OutFile C:\\Users\\vmuser\\Desktop\\agent.jar\"")
+    // this.vmware.runScriptOnVM(machine.vmxurl,'vmuser', 'password', "", 
+    //     "start cmd /k java -Dhudson.util.ProcessTree.disable=true -Dhudson.slaves.ChannelPinger.pingIntervalSeconds=60 -jar C:\\Users\\vmuser\\Desktop\\agent.jar -jnlpUrl http://${masterIP}:8080/computer/${env.vmnod}/slave-agent.jnlp -secret ${secret} -workDir C:\\Users\\vmuser", false, true)
     
     return machine
 }
