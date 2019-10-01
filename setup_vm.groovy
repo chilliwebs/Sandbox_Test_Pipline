@@ -25,8 +25,8 @@ def setup_vm() {
     def secret = jenkins.model.Jenkins.getInstance().getComputer(env.vmnod).getJnlpMac()
 
     this.vmware.runScriptOnVM(machine.vmxurl,'vmuser', 'password', "", 
-        "IEX(New-Object Net.WebClient).downloadString(\"https://raw.githubusercontent.com/chilliwebs/Sandbox_Test_Pipline/${env.BRANCH_NAME}/setup_vm.ps\");" +
-        "Invoke-SetupVM -masterIP \"${masterIP}\" -vmnod \"${env.vmnod}\" -secret \"${secret}\" -installerURL \"${installerURL}\"")
+        "powershell -Command \"IEX(New-Object Net.WebClient).downloadString('https://raw.githubusercontent.com/chilliwebs/Sandbox_Test_Pipline/${env.BRANCH_NAME}/setup_vm.ps');" +
+        "Invoke-SetupVM -masterIP '${masterIP}' -vmnod '${env.vmnod}' -secret '${secret}' -installerURL '${installerURL}'\"")
 
     // this.vmware.runScriptOnVM(machine.vmxurl,'vmuser', 'password', "", 
     //     "schtasks /create /tn \"shutdown timeout\" /tr \"shutdown.exe /s /f /t 0\" /sc onidle /i 30")
