@@ -10,10 +10,17 @@ function Invoke-SetupVM {
     Set-Content -Path $HOME\\elevated.bat -Value "$HOME\Desktop\BoseUpdaterInstaller.exe"
     Invoke-WebRequest $installerURL -OutFile $HOME\\Desktop\\BoseUpdaterInstaller.exe
     Start-Process -FilePath schtasks -ArgumentList "/create","/tn","shutdown timeout","/tr","shutdown.exe /s /f /t 0","/sc","onidle","/i","30"
+    
     Start-ScheduledTask -TaskName "Elevated"
-    while ((Get-ScheduledTask -TaskName 'Elevated').State  -ne 'Ready') {
-        Write-Verbose  -Message "Waiting on elevated task..."
+    $timeout = 60 ##  seconds
+    $timer =  [Diagnostics.Stopwatch]::StartNew()
+    while (((Get-ScheduledTask -TaskName 'Elevated').State -ne  'Ready') -and  ($timer.Elapsed.TotalSeconds -lt $timeout)) {    
+        Write-Verbose  -Message "Waiting for elevated task..."
+        Start-Sleep -Seconds  3   
     }
+    $timer.Stop()
+    Write-Verbose  -Message "Waited [$($timer.Elapsed.TotalSeconds)] seconds for elevated task"
+
     Invoke-WebRequest "http://${masterIP}:8080/jnlpJars/agent.jar" -OutFile "$HOME\\Desktop\\agent.jar"
     Start-Process -FilePath cmd -ArgumentList "/k","java","-Dhudson.util.ProcessTree.disable=true", "-Dhudson.slaves.ChannelPinger.pingIntervalSeconds=60", "-jar", "$HOME\\Desktop\\agent.jar", "-jnlpUrl", "http://${masterIP}:8080/computer/${vmnod}/slave-agent.jnlp", "-secret", "$secret", "-workDir", "$HOME"
     #Set-Content -Path $HOME\\elevated.bat -Value ""
