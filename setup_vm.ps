@@ -12,14 +12,14 @@ function Invoke-SetupVM {
     Start-Process -FilePath schtasks -ArgumentList "/create","/tn","shutdown timeout","/tr","shutdown.exe /s /f /t 0","/sc","onidle","/i","30"
     
     Start-ScheduledTask -TaskName "Elevated"
-    $timeout = 60 ##  seconds
-    $timer =  [Diagnostics.Stopwatch]::StartNew()
-    while (((Get-ScheduledTask -TaskName 'Elevated').State -ne  'Ready') -and ($timer.Elapsed.TotalSeconds -lt $timeout)) {    
-        Write-Verbose  -Message "Waiting for elevated task..."
+    $timeout = 60 ## seconds
+    $timer = [Diagnostics.Stopwatch]::StartNew()
+    while (((Get-ScheduledTask -TaskName 'Elevated').State -ne 'Ready') -and ($timer.Elapsed.TotalSeconds -lt $timeout)) {    
+        Write-Host -Message "Waiting for elevated task..."
         Start-Sleep -Seconds 3   
     }
     $timer.Stop()
-    Write-Verbose -Message "Waited [$($timer.Elapsed.TotalSeconds)] seconds for elevated task"
+    Write-Host -Message "Waited [$($timer.Elapsed.TotalSeconds)] seconds for elevated task"
 
     Invoke-WebRequest "http://${masterIP}:8080/jnlpJars/agent.jar" -OutFile "$HOME\\Desktop\\agent.jar"
     Start-Process -FilePath cmd -ArgumentList "/k","java","-Dhudson.util.ProcessTree.disable=true", "-Dhudson.slaves.ChannelPinger.pingIntervalSeconds=60", "-jar", "$HOME\\Desktop\\agent.jar", "-jnlpUrl", "http://${masterIP}:8080/computer/${vmnod}/slave-agent.jnlp", "-secret", "$secret", "-workDir", "$HOME"
