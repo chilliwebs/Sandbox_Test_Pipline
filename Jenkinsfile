@@ -78,7 +78,7 @@ pipeline {
                 }
               }
             }
-            tasks.put(test_conf.os+"_"+index, dowork)
+            tasks.put(index+"_"test_conf.os+"_"+test_conf.browser+"_"+test_conf.device, dowork)
           }
 
           parallel tasks
