@@ -56,74 +56,67 @@ public class SimpleFWUpdateTest {
       // Step # | name | target | value | comment
       // 1 | open |  | / | 
       driver.get("https://btu.bose.com/");
-      // 2 | waitForElementVisible | css=#connect_noinstall .ic_label | 60000 | 
+      // 2 | waitForElementVisible | css=#device_productoverview_container .btu-product-update-name | 120000 | 
       {
-        WebDriverWait wait = new WebDriverWait(driver, 60);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#connect_noinstall .ic_label")));
-      }
-      // 3 | verifyText | css=#connect_noinstall .ic_label | Bose Updater is ready. | 
-      assertThat(driver.findElement(By.cssSelector("#connect_noinstall .ic_label")).getText(), is("Bose Updater is ready."));
-      // 4 | waitForElementVisible | css=#device_productoverview_container .btu-product-update-name | 60000 | 
-      {
-        WebDriverWait wait = new WebDriverWait(driver, 60);
+        WebDriverWait wait = new WebDriverWait(driver, 120);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#device_productoverview_container .btu-product-update-name")));
       }
-      // 5 | pause | 2000 |  | 
+      // 3 | pause | 2000 |  | 
       try {
         Thread.sleep(2000);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
-      // 6 | sendKeys | xpath=//body | a | 
+      // 4 | sendKeys | xpath=//body | a | 
       driver.findElement(By.xpath("//body")).sendKeys("a");
-      // 7 | sendKeys | xpath=//body | d | 
+      // 5 | sendKeys | xpath=//body | d | 
       driver.findElement(By.xpath("//body")).sendKeys("d");
-      // 8 | sendKeys | xpath=//body | v | 
+      // 6 | sendKeys | xpath=//body | v | 
       driver.findElement(By.xpath("//body")).sendKeys("v");
-      // 9 | sendKeys | xpath=//body | ${KEY_UP} | 
+      // 7 | sendKeys | xpath=//body | ${KEY_UP} | 
       driver.findElement(By.xpath("//body")).sendKeys(Keys.UP);
-      // 10 | sendKeys | xpath=//body | ${KEY_DOWN} | 
+      // 8 | sendKeys | xpath=//body | ${KEY_DOWN} | 
       driver.findElement(By.xpath("//body")).sendKeys(Keys.DOWN);
-      // 11 | waitForElementVisible | id=device_updatenow | 20000 | 
+      // 9 | waitForElementVisible | id=device_updatenow | 20000 | 
       {
         WebDriverWait wait = new WebDriverWait(driver, 20);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("device_updatenow")));
       }
-      // 12 | pause | 2000 |  | 
+      // 10 | pause | 2000 |  | 
       try {
         Thread.sleep(2000);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
-      // 13 | click | id=device_updatenow |  | 
+      // 11 | click | id=device_updatenow |  | 
       driver.findElement(By.id("device_updatenow")).click();
-      // 14 | assertElementPresent | id=device_updating |  | 
+      // 12 | assertElementPresent | id=device_updating |  | 
       {
         List<WebElement> elements = driver.findElements(By.id("device_updating"));
         assert(elements.size() > 0);
       }
-      // 15 | assertElementPresent | id=device_update_progress |  | 
+      // 13 | assertElementPresent | id=device_update_progress |  | 
       {
         List<WebElement> elements = driver.findElements(By.id("device_update_progress"));
         assert(elements.size() > 0);
       }
-      // 16 | assertElementPresent | css=#device_updatestatus > #device_updateavailable |  | 
+      // 14 | assertElementPresent | css=#device_updatestatus > #device_updateavailable |  | 
       {
         List<WebElement> elements = driver.findElements(By.cssSelector("#device_updatestatus > #device_updateavailable"));
         assert(elements.size() > 0);
       }
-      // 17 | assertElementPresent | id=device_update_instructions |  | 
+      // 15 | assertElementPresent | id=device_update_instructions |  | 
       {
         List<WebElement> elements = driver.findElements(By.id("device_update_instructions"));
         assert(elements.size() > 0);
       }
-      // 18 | waitForElementVisible | id=device_updatecompletesuccess | 1800000 | 
+      // 16 | waitForElementVisible | id=device_updatecompletesuccess | 1800000 | 
       {
         WebDriverWait wait = new WebDriverWait(driver, 1800);
         wait.until(ExpectedConditions.or(ExpectedConditions.visibilityOfElementLocated(By.id("errorbox_content")), 
           ExpectedConditions.visibilityOfElementLocated(By.id("device_updatecompletesuccess"))));
       }
-      // 19 | verifyText | id=device_update_progress | 100% | 
+      // 17 | verifyText | id=device_update_progress | 100% | 
       assertThat(driver.findElement(By.id("device_update_progress")).getText(), is("100%"));
     }
   }
