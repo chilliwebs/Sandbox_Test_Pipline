@@ -5,9 +5,10 @@ this.acro = evaluate 'http://172.17.0.1:9876/api.groovy'.toURL().text
 //---------------
 
 def vm_exec() {
-    echo "**GOT VM ${env.vmid}**"
-    echo "**GOT Device ${env.dev}**"
-    echo "**GOT NODE ${env.vmnod}**"
+    def machine = this.vmware.getMachinesJSON().get(env.vmid)
+    def dev = this.acro.getDevicesJSON().get(env.dev)
+
+    echo "**VM:${machine.name} Device:${dev.alias} NODE:${env.vmnod}**"
     echo("Testing")
     echo('were in!')
 

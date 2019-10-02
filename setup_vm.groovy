@@ -4,12 +4,10 @@ this.acro = evaluate 'http://172.17.0.1:9876/api.groovy'.toURL().text
 //---------------
 
 def setup_vm() {
-    echo "**GOT VM ${env.vmid}**"
-    echo "**GOT Device ${env.dev}**"
-    echo "**GOT NODE ${env.vmnod}**"
-
     def machine = this.vmware.getMachinesJSON().get(env.vmid)
     def dev = this.acro.getDevicesJSON().get(env.dev)
+
+    echo "**VM:${machine.name} Device:${dev.alias} NODE:${env.vmnod}**"
 
     echo("setting up ${machine.vmxurl}")
     this.acro.setPortInfo(env.dev.split('-')[0], (env.dev.split('-')[1]).toInteger(), 'ON')
