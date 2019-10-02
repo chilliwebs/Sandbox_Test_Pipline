@@ -1,8 +1,5 @@
 pipeline {
   agent none
-  triggers {
-    cron('*/30 * * * *')
-  }
   stages {
     stage('Configure') {
       agent any
