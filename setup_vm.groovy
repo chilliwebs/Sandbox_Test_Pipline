@@ -28,13 +28,6 @@ def setup_vm() {
         "powershell -Command \"IEX(New-Object Net.WebClient).downloadString('https://raw.githubusercontent.com/chilliwebs/Sandbox_Test_Pipline/${env.BRANCH_NAME}/setup_vm.ps');" +
         "Invoke-SetupVM -masterIP '${masterIP}' -vmnod '${env.vmnod}' -secret '${secret}' -installerURL '${installerURL}'\"", false, true)
 
-    // this.vmware.runScriptOnVM(machine.vmxurl,'vmuser', 'password', "", 
-    //     "schtasks /create /tn \"shutdown timeout\" /tr \"shutdown.exe /s /f /t 0\" /sc onidle /i 30")
-    // this.vmware.runScriptOnVM(machine.vmxurl,'vmuser', 'password', "", 
-    //     "powershell -Command \"Invoke-WebRequest http://${masterIP}:8080/jnlpJars/agent.jar -OutFile C:\\Users\\vmuser\\Desktop\\agent.jar\"")
-    // this.vmware.runScriptOnVM(machine.vmxurl,'vmuser', 'password', "", 
-    //     "start cmd /k java -Dhudson.util.ProcessTree.disable=true -Dhudson.slaves.ChannelPinger.pingIntervalSeconds=60 -jar C:\\Users\\vmuser\\Desktop\\agent.jar -jnlpUrl http://${masterIP}:8080/computer/${env.vmnod}/slave-agent.jnlp -secret ${secret} -workDir C:\\Users\\vmuser", false, true)
-    
     return machine
 }
 
