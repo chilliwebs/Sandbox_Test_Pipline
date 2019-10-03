@@ -62,20 +62,19 @@ pipeline {
                       }
                     }
                     stage('VM Execution') {
-                      when {
-                        expression {
-                          return test_conf.setup == true;
-                        }
-                      }
-                      catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                        timeout(45) {
-                          node(env.vmnod) {
-                            withEnv(["browser=${test_conf.browser}"]) {
-                              unstash "scripts"
-                              load "vm_exec.groovy"
+                      if (test_conf.setup == true) {
+                        catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                          timeout(45) {
+                            node(env.vmnod) {
+                              withEnv(["browser=${test_conf.browser}"]) {
+                                unstash "scripts"
+                                load "vm_exec.groovy"
+                              }
                             }
                           }
                         }
+                      } else {
+                        echo "Skipping execution setup failed"
                       }
                     }
                     stage('Teardown VM') {
