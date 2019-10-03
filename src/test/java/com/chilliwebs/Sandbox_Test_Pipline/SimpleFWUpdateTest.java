@@ -56,9 +56,9 @@ public class SimpleFWUpdateTest {
       // Step # | name | target | value | comment
       // 1 | open |  | / | 
       driver.get("https://btu.bose.com/");
-      // 2 | waitForElementVisible | css=#device_productoverview_container .btu-product-update-name | 120000 | 
+      // 2 | waitForElementVisible | css=#device_productoverview_container .btu-product-update-name | 180000 | 
       {
-        WebDriverWait wait = new WebDriverWait(driver, 120);
+        WebDriverWait wait = new WebDriverWait(driver, 180);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#device_productoverview_container .btu-product-update-name")));
       }
       // 3 | pause | 2000 |  | 
