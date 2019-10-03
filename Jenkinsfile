@@ -34,14 +34,14 @@ pipeline {
       steps {
         script {
           def tests = [
-            [os:'Windows10', browser: 'chrome', device: 'Baywolf'],
-            [os:'Windows10', browser: 'firefox', device: 'Levi'],
-            //[os:'Windows10', browser: 'internet explorer', device: 'Baywolf'],
-            //[os:'Windows10', browser: 'MicrosoftEdge', device: 'Levi'],
-            [os:'Windows10', browser: 'firefox', device: 'Baywolf'],
-            [os:'Windows10', browser: 'chrome', device: 'Levi'],
-            [os:'Windows10', browser: 'chrome', device: 'Celine'],
-            [os:'Windows10', browser: 'firefox', device: 'Celine'],
+            [os:'Windows10', browser: 'chrome', device: 'Baywolf', setup: false],
+            [os:'Windows10', browser: 'firefox', device: 'Levi', setup: false],
+            //[os:'Windows10', browser: 'internet explorer', device: 'Baywolf', setup: false],
+            //[os:'Windows10', browser: 'MicrosoftEdge', device: 'Levi', setup: false],
+            [os:'Windows10', browser: 'firefox', device: 'Baywolf', setup: false],
+            [os:'Windows10', browser: 'chrome', device: 'Levi', setup: false],
+            [os:'Windows10', browser: 'chrome', device: 'Celine', setup: false],
+            [os:'Windows10', browser: 'firefox', device: 'Celine', setup: false],
           ]
 
           def tasks = [:]
@@ -51,12 +51,22 @@ pipeline {
                 lock(label:test_conf.device, quantity: 1, variable:'dev') {
                   lock(label:'master_vmhost_node', quantity: 1, variable:'vmnod') {
                     stage('Setup VM') {
-                      node {
-                        unstash "scripts"
-                        load "setup_vm.groovy"
+                      catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                        timeout(15) {
+                          node {
+                            unstash "scripts"
+                            load "setup_vm.groovy"
+                            test_conf.setup = true
+                          }
+                        }
                       }
                     }
                     stage('VM Execution') {
+                      when {
+                        expression {
+                          return test_conf.setup == true;
+                        }
+                      }
                       catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                         timeout(45) {
                           node(env.vmnod) {
