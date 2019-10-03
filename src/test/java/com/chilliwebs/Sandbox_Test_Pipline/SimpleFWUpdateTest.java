@@ -17,6 +17,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import java.util.*;
 
 // example usage:  mvn clean test -Dbrowser="firefox"
@@ -28,16 +29,24 @@ public class SimpleFWUpdateTest {
   @Before
   public void setUp() {
     String browser = System.getProperty("browser");
+    
+    // WebDriverManager.operadriver().setup();
+    // WebDriverManager.phantomjs().setup();
+
     if(browser == null)
       browser = System.getenv("browser");
     if(browser != null) {
       if(browser.equals("chrome")) {
+        WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
       } else if(browser.equals("firefox")) {
+        WebDriverManager.firefoxdriver().setup();
         driver = new FirefoxDriver();
       } else if(browser.equals("internet explorer")) {
+        WebDriverManager.iedriver().setup();
         driver = new InternetExplorerDriver();
       } else if(browser.equals("MicrosoftEdge")) {
+        WebDriverManager.edgedriver().setup();
         driver = new EdgeDriver();
       }
       js = (JavascriptExecutor) driver;

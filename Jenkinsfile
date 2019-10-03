@@ -25,7 +25,7 @@ pipeline {
 
             sh "chown 1000:1000 -R target"
 
-            stash name: "binaries", includes: "**/*.jar,*.exe"
+            stash name: "binaries", includes: "**/*.jar"
           }
         }
       }
