@@ -133,7 +133,8 @@ public class SimpleFWUpdateTest {
       {
         WebDriverWait wait = new WebDriverWait(driver, 1800);
         wait.until(ExpectedConditions.or(ExpectedConditions.visibilityOfElementLocated(By.id("errorbox_content")), 
-          ExpectedConditions.visibilityOfElementLocated(By.id("device_updatecompletesuccess"))));
+          ExpectedConditions.visibilityOfElementLocated(By.id("device_updatecompletesuccess")),
+          ExpectedConditions.visibilityOfElementLocated(By.id("device_updatenow"))));
       }
       // 17 | verifyText | id=device_update_progress | 100% | 
       assertThat(driver.findElement(By.id("device_update_progress")).getText(), is("100%"));
