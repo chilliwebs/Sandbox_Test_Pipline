@@ -39,12 +39,12 @@ pipeline {
           def tests = [
             [os:'Windows10', browser: 'chrome', device: 'Baywolf', setup: false],
             [os:'Windows10', browser: 'firefox', device: 'Levi', setup: false],
-            [os:'Windows10', browser: 'internet explorer', device: 'Baywolf', setup: false],
-            [os:'Windows10', browser: 'MicrosoftEdge', device: 'Levi', setup: false],
+            //[os:'Windows10', browser: 'internet explorer', device: 'Baywolf', setup: false],
+            //[os:'Windows10', browser: 'MicrosoftEdge', device: 'Levi', setup: false],
+            [os:'Windows10', browser: 'firefox', device: 'Baywolf', setup: false],
+            [os:'Windows10', browser: 'chrome', device: 'Levi', setup: false],
             [os:'Windows10', browser: 'chrome', device: 'Celine', setup: false],
-            [os:'Windows10', browser: 'firefox', device: 'Celine', setup: false]
-            // [os:'Windows10', browser: 'internet explorer', device: 'Powder', setup: false],
-            // [os:'Windows10', browser: 'MicrosoftEdge', device: 'Powder', setup: false]
+            [os:'Windows10', browser: 'firefox', device: 'Celine', setup: false],
           ]
 
           def tasks = [:]
