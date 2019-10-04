@@ -21,6 +21,8 @@ function Invoke-SetupVM {
     $timer.Stop()
     Write-Host -Message "Waited [$($timer.Elapsed.TotalSeconds)] seconds for elevated task"
 
+    Start-Process -FilePath 'C:\Program Files (x86)\Bose Updater\BOSEUPDATER.EXE' -ArgumentList '-d','https://downloads-beta.bose.com/lookup.xml'
+
     Invoke-WebRequest "http://${masterIP}:8080/jnlpJars/agent.jar" -OutFile "$HOME\\Desktop\\agent.jar"
     Start-Process -FilePath cmd -ArgumentList "/k","java","-Dhudson.util.ProcessTree.disable=true", "-Dhudson.slaves.ChannelPinger.pingIntervalSeconds=60", "-jar", "$HOME\\Desktop\\agent.jar", "-jnlpUrl", "http://${masterIP}:8080/computer/${vmnod}/slave-agent.jnlp", "-secret", "$secret", "-workDir", "$HOME"
     #Set-Content -Path $HOME\\elevated.bat -Value ""

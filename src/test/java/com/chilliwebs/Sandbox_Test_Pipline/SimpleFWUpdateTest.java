@@ -13,6 +13,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.JavascriptExecutor;
@@ -76,27 +77,36 @@ public class SimpleFWUpdateTest {
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
-      // 4 | sendKeys | xpath=//body | a | 
-      driver.findElement(By.xpath("//body")).sendKeys("a");
-      // 5 | sendKeys | xpath=//body | d | 
-      driver.findElement(By.xpath("//body")).sendKeys("d");
-      // 6 | sendKeys | xpath=//body | v | 
-      driver.findElement(By.xpath("//body")).sendKeys("v");
-      // 7 | sendKeys | xpath=//body | ${KEY_UP} | 
-      driver.findElement(By.xpath("//body")).sendKeys(Keys.UP);
-      // 8 | sendKeys | xpath=//body | ${KEY_DOWN} | 
-      driver.findElement(By.xpath("//body")).sendKeys(Keys.DOWN);
-      // 9 | waitForElementVisible | id=device_updatenow | 20000 | 
-      {
-        WebDriverWait wait = new WebDriverWait(driver, 20);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("device_updatenow")));
+
+      WebElement device_updatenow = driver.findElement(By.id("device_updatenow"));
+      if(!device_updatenow.isDisplayed()) {
+        // 4 | sendKeys | xpath=//body | a | 
+        driver.findElement(By.xpath("//body")).sendKeys("a");
+        // 5 | sendKeys | xpath=//body | d | 
+        driver.findElement(By.xpath("//body")).sendKeys("d");
+        // 6 | sendKeys | xpath=//body | v | 
+        driver.findElement(By.xpath("//body")).sendKeys("v");
+        // 7 | sendKeys | xpath=//body | ${KEY_UP} | 
+        driver.findElement(By.xpath("//body")).sendKeys(Keys.UP);
+        // 8 | sendKeys | xpath=//body | ${KEY_DOWN} | 
+        driver.findElement(By.xpath("//body")).sendKeys(Keys.DOWN);
+        // 9 | waitForElementVisible | id=device_updatenow | 20000 | 
+        {
+          WebDriverWait wait = new WebDriverWait(driver, 20);
+          wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("device_updatenow")));
+        }
+        // 10 | pause | 2000 |  | 
+        try {
+          Thread.sleep(2000);
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
+
+        WebElement device_targetfirmware = driver.findElement(By.id("device_targetfirmware"));
+        Select dropdown = new Select(device_targetfirmware);
+        dropdown.selectByIndex(1);
       }
-      // 10 | pause | 2000 |  | 
-      try {
-        Thread.sleep(2000);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
+
       // 11 | click | id=device_updatenow |  | 
       driver.findElement(By.id("device_updatenow")).click();
       // 12 | assertElementPresent | id=device_updating |  | 
