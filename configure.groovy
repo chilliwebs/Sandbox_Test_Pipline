@@ -31,8 +31,8 @@ def configure() {
     }
 
     def device_choices = devices_json.values().collect({val -> 'any:'+val.group}).unique().findAll { it != '(No Group)' } +
-        devices.values().collect({val -> val.alias}).unique().findAll { !it.trim().isEmpty() } +
-        devices.keySet().collect({val -> 'port:'+val})
+        devices_json.values().collect({val -> val.alias}).unique().findAll { !it.trim().isEmpty() } +
+        devices_json.keySet().collect({val -> 'port:'+val})
     def chs_devices = input(
         id: 'chs_devices', message: 'What devices do you want to test?',
         parameters: device_choices.collect {
