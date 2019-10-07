@@ -49,7 +49,7 @@ pipeline {
             [os:'Windows10', browser: 'firefox', device: 'Celine', setup: false],
           ]
 
-          ArrayList<Object> tasks = new ArrayList<Object>();
+          def tasks = [:]
           tests.eachWithIndex { test_conf, index ->
             def dowork = {
               lock(label:test_conf.os, quantity: 1, variable:'vmid') {
@@ -95,8 +95,14 @@ pipeline {
             tasks.put(index+"_"+test_conf.os+"_"+test_conf.browser+"_"+test_conf.device, dowork)
           }
 
-          Collections.shuffle(tasks);
-          parallel tasks
+          // Shuffle
+          List<String> list = new ArrayList<>(tasks.keySet())
+          Collections.shuffle(list);
+
+          def shuffleMap = [:]
+          list.forEach(k->shuffleMap.put(k, map.get(k)));
+
+          parallel shuffleMap
         }
       }
     }
