@@ -27,26 +27,37 @@ public class SimpleFWUpdateTest {
   private WebDriver driver;
   private Map<String, Object> vars;
   JavascriptExecutor js;
+
+  String machine;
+  String device;
+  String browser;
+
   @Before
   public void setUp() {
-    String browser = System.getProperty("browser");
-    
+    machine = System.getProperty("machine");
+    if (machine == null)
+      machine = System.getenv("machine");
+    device = System.getProperty("dev");
+    if (device == null)
+      device = System.getenv("dev");
+    browser = System.getProperty("browser");
+
     // WebDriverManager.operadriver().setup();
     // WebDriverManager.phantomjs().setup();
 
-    if(browser == null)
+    if (browser == null)
       browser = System.getenv("browser");
-    if(browser != null) {
-      if(browser.equals("chrome")) {
+    if (browser != null) {
+      if (browser.equals("chrome")) {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
-      } else if(browser.equals("firefox")) {
+      } else if (browser.equals("firefox")) {
         WebDriverManager.firefoxdriver().setup();
         driver = new FirefoxDriver();
-      } else if(browser.equals("internet explorer")) {
+      } else if (browser.equals("internet explorer")) {
         WebDriverManager.iedriver().setup();
         driver = new InternetExplorerDriver();
-      } else if(browser.equals("MicrosoftEdge")) {
+      } else if (browser.equals("MicrosoftEdge")) {
         WebDriverManager.edgedriver().setup();
         driver = new EdgeDriver();
       }
@@ -54,24 +65,28 @@ public class SimpleFWUpdateTest {
       vars = new HashMap<String, Object>();
     }
   }
+
   @After
   public void tearDown() {
-    if(driver != null)
+    if (driver != null)
       driver.quit();
   }
+
   @Test
   public void testSimpleFWUpdate() {
-    if(driver != null) {
+    if (driver != null) {
       // Test name: Simple FW Update
       // Step # | name | target | value | comment
-      // 1 | open |  | / | 
+      // 1 | open | | / |
       driver.get("https://btu.bose.com/");
-      // 2 | waitForElementVisible | css=#device_productoverview_container .btu-product-update-name | 180000 | 
+      // 2 | waitForElementVisible | css=#device_productoverview_container
+      // .btu-product-update-name | 180000 |
       {
         WebDriverWait wait = new WebDriverWait(driver, 180);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#device_productoverview_container .btu-product-update-name")));
+        wait.until(ExpectedConditions
+            .visibilityOfElementLocated(By.cssSelector("#device_productoverview_container .btu-product-update-name")));
       }
-      // 3 | pause | 2000 |  | 
+      // 3 | pause | 2000 | |
       try {
         Thread.sleep(2000);
       } catch (InterruptedException e) {
@@ -79,23 +94,23 @@ public class SimpleFWUpdateTest {
       }
 
       WebElement device_updatenow = driver.findElement(By.id("device_updatenow"));
-      if(!device_updatenow.isDisplayed()) {
-        // 4 | sendKeys | xpath=//body | a | 
+      if (!device_updatenow.isDisplayed()) {
+        // 4 | sendKeys | xpath=//body | a |
         driver.findElement(By.xpath("//body")).sendKeys("a");
-        // 5 | sendKeys | xpath=//body | d | 
+        // 5 | sendKeys | xpath=//body | d |
         driver.findElement(By.xpath("//body")).sendKeys("d");
-        // 6 | sendKeys | xpath=//body | v | 
+        // 6 | sendKeys | xpath=//body | v |
         driver.findElement(By.xpath("//body")).sendKeys("v");
-        // 7 | sendKeys | xpath=//body | ${KEY_UP} | 
+        // 7 | sendKeys | xpath=//body | ${KEY_UP} |
         driver.findElement(By.xpath("//body")).sendKeys(Keys.UP);
-        // 8 | sendKeys | xpath=//body | ${KEY_DOWN} | 
+        // 8 | sendKeys | xpath=//body | ${KEY_DOWN} |
         driver.findElement(By.xpath("//body")).sendKeys(Keys.DOWN);
-        // 9 | waitForElementVisible | id=device_updatenow | 20000 | 
+        // 9 | waitForElementVisible | id=device_updatenow | 20000 |
         {
           WebDriverWait wait = new WebDriverWait(driver, 20);
           wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("device_updatenow")));
         }
-        // 10 | pause | 2000 |  | 
+        // 10 | pause | 2000 | |
         try {
           Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -107,43 +122,47 @@ public class SimpleFWUpdateTest {
         dropdown.selectByIndex(1);
       }
 
-      // 11 | click | id=device_updatenow |  | 
+      // 11 | click | id=device_updatenow | |
       driver.findElement(By.id("device_updatenow")).click();
-      // 12 | assertElementPresent | id=device_updating |  | 
+      // 12 | assertElementPresent | id=device_updating | |
       {
         List<WebElement> elements = driver.findElements(By.id("device_updating"));
-        assert(elements.size() > 0);
+        assert (elements.size() > 0);
       }
-      // 13 | assertElementPresent | id=device_update_progress |  | 
+      // 13 | assertElementPresent | id=device_update_progress | |
       {
         List<WebElement> elements = driver.findElements(By.id("device_update_progress"));
-        assert(elements.size() > 0);
+        assert (elements.size() > 0);
       }
-      // 14 | assertElementPresent | css=#device_updatestatus > #device_updateavailable |  | 
+      // 14 | assertElementPresent | css=#device_updatestatus >
+      // #device_updateavailable | |
       {
-        List<WebElement> elements = driver.findElements(By.cssSelector("#device_updatestatus > #device_updateavailable"));
-        assert(elements.size() > 0);
+        List<WebElement> elements = driver
+            .findElements(By.cssSelector("#device_updatestatus > #device_updateavailable"));
+        assert (elements.size() > 0);
       }
-      // 15 | assertElementPresent | id=device_update_instructions |  | 
+      // 15 | assertElementPresent | id=device_update_instructions | |
       {
         List<WebElement> elements = driver.findElements(By.id("device_update_instructions"));
-        assert(elements.size() > 0);
+        assert (elements.size() > 0);
       }
-      // 16 | waitForElementVisible | id=device_updatecompletesuccess | 1800000 | 
+      // 16 | waitForElementVisible | id=device_updatecompletesuccess | 1800000 |
       {
         WebDriverWait wait = new WebDriverWait(driver, 1800);
-        wait.until(ExpectedConditions.or(ExpectedConditions.visibilityOfElementLocated(By.id("errorbox_content")), 
-          ExpectedConditions.visibilityOfElementLocated(By.id("device_updatecompletesuccess")),
-          ExpectedConditions.visibilityOfElementLocated(By.id("device_updatenow"))));
+        wait.until(ExpectedConditions.or(ExpectedConditions.visibilityOfElementLocated(By.id("errorbox_content")),
+            ExpectedConditions.visibilityOfElementLocated(By.id("device_updatecompletesuccess")),
+            ExpectedConditions.visibilityOfElementLocated(By.id("device_updatenow"))));
       }
-      // 17 | verifyText | id=device_update_progress | 100% | 
-      if(driver.findElement(By.id("errorbox_content")).isDisplayed()) {
+      // 17 | verifyText | id=device_update_progress | 100% |
+      if (driver.findElement(By.id("errorbox_content")).isDisplayed()) {
         fail("Error message is displayed");
-      } else if(driver.findElement(By.id("device_updatecompletesuccess")).isDisplayed()) {
+      } else if (driver.findElement(By.id("device_updatecompletesuccess")).isDisplayed()) {
         assertThat(driver.findElement(By.id("device_update_progress")).getText(), is("100%"));
       } else {
         assertTrue(driver.findElement(By.id("device_updatenow")).isDisplayed());
       }
+
+      System.out.println("Done Testing - machine:" + machine + " - device:" + device + " - browser:" + browser);
     }
   }
 }
