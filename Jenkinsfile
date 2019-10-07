@@ -49,7 +49,7 @@ pipeline {
             [os:'Windows10', browser: 'firefox', device: 'Celine', setup: false],
           ]
 
-          def tasks = [:]
+          ArrayList<Object> tasks = new ArrayList<Object>();
           tests.eachWithIndex { test_conf, index ->
             def dowork = {
               lock(label:test_conf.os, quantity: 1, variable:'vmid') {
