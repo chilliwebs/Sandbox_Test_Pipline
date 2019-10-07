@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('Configure') {
       when {
-        expression { !param.test_matrix }
+        expression { !params.test_matrix }
       }
       agent any
       steps {
@@ -43,9 +43,9 @@ pipeline {
       steps {
         script {
           echo('Using Test Matrix: ')
-          echo(param.test_matrix)
+          echo(params.test_matrix)
           def tasks = [:]
-          (new groovy.json.JsonSlurper()).parseText(param.test_matrix).collect({tst -> new HashMap<String,Object>(tst)}).eachWithIndex { test_conf, index ->
+          (new groovy.json.JsonSlurper()).parseText(params.test_matrix).collect({tst -> new HashMap<String,Object>(tst)}).eachWithIndex { test_conf, index ->
             def dowork = {
               lock(label:test_conf.device, quantity: 1, variable:'dev') {
                 lock(label:test_conf.os, quantity: 1, variable:'vmid') {
