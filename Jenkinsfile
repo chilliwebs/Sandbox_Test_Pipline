@@ -1,6 +1,6 @@
 pipeline {
   parameters {
-    booleanParam(defaultValue: '', description: '', name: 'test_matrix')
+    string(description: 'the testing matrix', name: 'test_matrix')
   }
   //triggers {
   //  cron('H H/3 * * *')
