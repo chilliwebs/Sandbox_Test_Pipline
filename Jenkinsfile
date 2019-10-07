@@ -1,17 +1,16 @@
 pipeline {
   parameters {
-    string(defaultValue: '[]', description: 'the testing matrix', name: 'test_matrix')
+    string(defaultValue: '[]', description: 'dont change if you wish to run configure step', name: 'test_matrix')
   }
   agent none
   stages {
     stage('Configure') {
-      when {
-        expression { params.test_matrix == '[]' }
-      }
       agent any
       steps {
         script {
-          load 'configure.groovy'
+          if(params.test_matrix == '[]') {
+            load 'configure.groovy'
+          }
           stash name: "scripts", includes: "*.groovy"
         }
       }
