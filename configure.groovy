@@ -15,8 +15,7 @@ def configure() {
             [$class: 'BooleanParameterDefinition', defaultValue: false, name: it]
         }
     )
-    echo(chs_os_es)
-    if(chs_os_es instanceof String) chs_os_es = [chs_os_es:true]
+    if(chs_os_es instanceof Boolean) chs_os_es = os_choices.collectEntries { [(it): chs_os_es] }
     def os_es = chs_os_es.findAll{ it.value }.collect {
         it.key.toString()
     }
