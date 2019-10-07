@@ -50,14 +50,14 @@ def configure() {
     os_es.each({ os -> 
         browsers.each({ browser -> 
             devices.each({ device -> 
-                test_matrix.add([os:os, browser:browser, device:device, setup: false])
+                test_matrix.add([os:os, browser:browser, device:device, setup:false])
             })
         })
     })
     Collections.shuffle(test_matrix);
 
     echo('Storing Test Matrix: ')
-    echo(env.test_matrix)
+    echo(test_matrix)
     env.test_matrix = test_matrix
 }
 
