@@ -57,8 +57,8 @@ def configure() {
     Collections.shuffle(test_matrix);
 
     echo('Storing Test Matrix: ')
-    env.test_matrix = groovy.json.JsonOutput.toJson(test_matrix)
-    echo(env.test_matrix)
+    param.test_matrix = groovy.json.JsonOutput.toJson(test_matrix)
+    echo(param.test_matrix)
 }
 
 configure()
