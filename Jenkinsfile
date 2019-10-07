@@ -42,8 +42,8 @@ pipeline {
           def tasks = [:]
           tests.eachWithIndex { test_conf, index ->
             def dowork = {
-              lock(label:test_conf.get('device'), quantity: 1, variable:'dev') {
-                lock(label:test_conf.get('os'), quantity: 1, variable:'vmid') {
+              lock(label:test_conf.device, quantity: 1, variable:'dev') {
+                lock(label:test_conf.os, quantity: 1, variable:'vmid') {
                   lock(label:'master_vmhost_node', quantity: 1, variable:'vmnod') {
                     stage('Setup VM') {
                       catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
@@ -51,17 +51,17 @@ pipeline {
                           node {
                             unstash "scripts"
                             load "setup_vm.groovy"
-                            test_conf.put('setup', true)
+                            test_conf.setup = true
                           }
                         }
                       }
                     }
                     stage('VM Execution') {
-                      if (test_conf.get('setup') == true) {
+                      if (test_conf.setup == true) {
                         catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                           timeout(45) {
                             node(env.vmnod) {
-                              withEnv(["browser=${test_conf.get('browser')}"]) {
+                              withEnv(["browser=${test_conf.browser}"]) {
                                 unstash "scripts"
                                 load "vm_exec.groovy"
                               }
@@ -82,7 +82,7 @@ pipeline {
                 }
               }
             }
-            tasks.put(index+"_"+test_conf.get('os')+"_"+test_conf.get('browser')+"_"+test_conf.get('device'), dowork)
+            tasks.put(index+"_"+test_conf.os+"_"+test_conf.browser+"_"+test_conf.device, dowork)
           }
 
           parallel tasks
