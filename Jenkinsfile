@@ -38,9 +38,9 @@ pipeline {
         script {
           echo('Using Test Matrix: ')
           echo(env.test_matrix)
-          echo(env.test_matrix.class.toString())
+          def tests = (new groovy.json.JsonSlurper()).parseText(env.test_matrix)
           def tasks = [:]
-          env.test_matrix.eachWithIndex { test_conf, index ->
+          tests.eachWithIndex { test_conf, index ->
             def dowork = {
               lock(label:test_conf.get('device'), quantity: 1, variable:'dev') {
                 lock(label:test_conf.get('os'), quantity: 1, variable:'vmid') {
