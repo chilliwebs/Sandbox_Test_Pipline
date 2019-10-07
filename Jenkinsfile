@@ -6,7 +6,7 @@ pipeline {
   stages {
     stage('Configure') {
       when {
-        expression { params.test_matrix != '[]' }
+        expression { params.test_matrix == '[]' }
       }
       agent any
       steps {
