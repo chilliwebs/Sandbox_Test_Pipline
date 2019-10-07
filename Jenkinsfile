@@ -5,6 +5,12 @@ pipeline {
   agent none
   stages {
     stage('Configure') {
+      parameters {
+        booleanParam(defaultValue: '', description: '', name: 'test_matrix')
+      }
+      when {
+        expression { !env.test_matrix }
+      }
       agent any
       steps {
         script {
