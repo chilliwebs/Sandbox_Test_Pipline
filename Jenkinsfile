@@ -52,8 +52,8 @@ pipeline {
           def tasks = [:]
           tests.eachWithIndex { test_conf, index ->
             def dowork = {
-              lock(label:test_conf.os, quantity: 1, variable:'vmid') {
-                lock(label:test_conf.device, quantity: 1, variable:'dev') {
+              lock(label:test_conf.device, quantity: 1, variable:'dev') {
+                lock(label:test_conf.os, quantity: 1, variable:'vmid') {
                   lock(label:'master_vmhost_node', quantity: 1, variable:'vmnod') {
                     stage('Setup VM') {
                       catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
