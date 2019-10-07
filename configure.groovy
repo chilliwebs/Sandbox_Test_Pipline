@@ -5,10 +5,10 @@ this.acro = evaluate 'http://172.17.0.1:9876/api.groovy'.toURL().text
 
 def configure() {
     echo('configure')
-    def machines = this.vmware.getMachinesJSON()
-    def devices = this.acro.getDevicesJSON()
+    def machines_json = this.vmware.getMachinesJSON()
+    def devices_json = this.acro.getDevicesJSON()
 
-    def os_choices = machines.values().collect({val -> val.group}).unique().findAll { it != '(No Group)' }
+    def os_choices = machines_json.values().collect({val -> val.group}).unique().findAll { it != '(No Group)' }
     def chs_os_es = input(
         id: 'chs_os_es', message: 'What operating systems do you want to test?',
         parameters: os_choices.collect {
@@ -30,7 +30,7 @@ def configure() {
         it.key.toString()
     }
 
-    def device_choices = devices.values().collect({val -> 'any:'+val.group}).unique().findAll { it != '(No Group)' } +
+    def device_choices = devices_json.values().collect({val -> 'any:'+val.group}).unique().findAll { it != '(No Group)' } +
         devices.values().collect({val -> val.alias}).unique().findAll { !it.trim().isEmpty() } +
         devices.keySet().collect({val -> 'port:'+val})
     def chs_devices = input(
