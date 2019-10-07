@@ -14,6 +14,8 @@ pipeline {
       agent any
       steps {
         script {
+          echo('Using Test Matrix: ')
+          echo(params.test_matrix)
           load 'configure.groovy'
           stash name: "scripts", includes: "*.groovy"
         }
