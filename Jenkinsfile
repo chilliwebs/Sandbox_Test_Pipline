@@ -38,7 +38,7 @@ pipeline {
         script {
           echo('Using Test Matrix: ')
           echo(env.test_matrix)
-          echo(env.test_matrix.class)
+          echo(env.test_matrix.class.toString())
           def tasks = [:]
           env.test_matrix.eachWithIndex { test_conf, index ->
             def dowork = {
