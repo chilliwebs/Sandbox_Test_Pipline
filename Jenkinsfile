@@ -36,21 +36,8 @@ pipeline {
     stage('Delegate') {
       steps {
         script {
-          def tests = [
-            [os:'Windows10', browser: 'chrome', device: 'Baywolf', setup: false],
-            [os:'Windows10', browser: 'firefox', device: 'Levi', setup: false],
-            //[os:'Windows10', browser: 'internet explorer', device: 'Baywolf', setup: false],
-            //[os:'Windows10', browser: 'MicrosoftEdge', device: 'Levi', setup: false],
-            [os:'Windows10', browser: 'firefox', device: 'Baywolf', setup: false],
-            [os:'Windows10', browser: 'chrome', device: 'Levi', setup: false],
-            [os:'Windows10', browser: 'chrome', device: 'Celine', setup: false],
-            [os:'Windows10', browser: 'firefox', device: 'Celine', setup: false],
-          ]
-
-          Collections.shuffle(tests);
-
-          def tasks = [:]
-          tests.eachWithIndex { test_conf, index ->
+          echo(env.test_matrix)
+          env.test_matrix.eachWithIndex { test_conf, index ->
             def dowork = {
               lock(label:test_conf.device, quantity: 1, variable:'dev') {
                 lock(label:test_conf.os, quantity: 1, variable:'vmid') {
