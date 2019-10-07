@@ -100,7 +100,7 @@ pipeline {
           Collections.shuffle(list);
 
           def shuffleMap = [:]
-          list.forEach(k->shuffleMap.put(k, map.get(k)));
+          list.each(k -> shuffleMap.put(k, map.get(k)))
 
           parallel shuffleMap
         }
