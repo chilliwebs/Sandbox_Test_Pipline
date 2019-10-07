@@ -2,14 +2,11 @@ pipeline {
   parameters {
     string(defaultValue: '[]', description: 'the testing matrix', name: 'test_matrix')
   }
-  //triggers {
-  //  cron('H H/3 * * *')
-  //}
   agent none
   stages {
     stage('Configure') {
       when {
-        expression { env.test_matrix != '[]' }
+        expression { params.test_matrix != '[]' }
       }
       agent any
       steps {
