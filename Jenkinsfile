@@ -85,6 +85,7 @@ pipeline {
             }
             tasks.put(index+"_"+test_conf.os+"_"+test_conf.browser+"_"+test_conf.device, dowork)
           }
+          tests.clear() // cleanup
 
           parallel tasks
         }
