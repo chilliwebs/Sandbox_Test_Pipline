@@ -1,6 +1,6 @@
 pipeline {
   parameters {
-    string(description: 'the testing matrix', name: 'test_matrix')
+    string(defaultValue: '', description: 'the testing matrix', name: 'test_matrix')
   }
   //triggers {
   //  cron('H H/3 * * *')
@@ -9,13 +9,11 @@ pipeline {
   stages {
     stage('Configure') {
       when {
-        expression { !params.test_matrix }
+        expression { params.test_matrix != '' }
       }
       agent any
       steps {
         script {
-          echo('Using Test Matrix: ')
-          echo(params.test_matrix)
           load 'configure.groovy'
           stash name: "scripts", includes: "*.groovy"
         }
