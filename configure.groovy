@@ -57,8 +57,8 @@ def configure() {
     Collections.shuffle(test_matrix);
 
     echo('Storing Test Matrix: ')
-    echo(test_matrix)
     env.test_matrix = test_matrix
+    echo(env.test_matrix)
 }
 
 configure()
