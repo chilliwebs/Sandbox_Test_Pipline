@@ -1,5 +1,3 @@
-import java.util.Collections;
-
 pipeline {
   //triggers {
   //  cron('H H/3 * * *')
@@ -49,6 +47,8 @@ pipeline {
             [os:'Windows10', browser: 'firefox', device: 'Celine', setup: false],
           ]
 
+          Collections.shuffle(tests);
+
           def tasks = [:]
           tests.eachWithIndex { test_conf, index ->
             def dowork = {
@@ -95,14 +95,7 @@ pipeline {
             tasks.put(index+"_"+test_conf.os+"_"+test_conf.browser+"_"+test_conf.device, dowork)
           }
 
-          // Shuffle
-          List<String> list = new ArrayList<>(tasks.keySet())
-          Collections.shuffle(list);
-
-          def shuffleMap = [:]
-          list.each(k -> shuffleMap.put(k, map.get(k)))
-
-          parallel shuffleMap
+          parallel tasks
         }
       }
     }
