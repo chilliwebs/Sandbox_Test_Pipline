@@ -1,13 +1,13 @@
 pipeline {
+  parameters {
+    booleanParam(defaultValue: '', description: '', name: 'test_matrix')
+  }
   //triggers {
   //  cron('H H/3 * * *')
   //}
   agent none
   stages {
     stage('Configure') {
-      parameters {
-        booleanParam(defaultValue: '', description: '', name: 'test_matrix')
-      }
       when {
         expression { !env.test_matrix }
       }
