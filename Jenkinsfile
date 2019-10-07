@@ -38,8 +38,10 @@ pipeline {
         script {
           echo('Using Test Matrix: ')
           echo(env.test_matrix)
+          def tests = (new groovy.json.JsonSlurper()).parseText(env.test_matrix)
           def tasks = [:]
-          (new groovy.json.JsonSlurper()).parseText(env.test_matrix).eachWithIndex { test_conf, index ->
+          tests.eachWithIndex { test_conf, index ->
+            def test_conf = new HashMap<String,Object>(tstcfg)
             def dowork = {
               lock(label:test_conf.device, quantity: 1, variable:'dev') {
                 lock(label:test_conf.os, quantity: 1, variable:'vmid') {
@@ -83,6 +85,7 @@ pipeline {
             }
             tasks.put(index+"_"+test_conf.os+"_"+test_conf.browser+"_"+test_conf.device, dowork)
           }
+          tests.clear() // cleanup
 
           parallel tasks
         }
