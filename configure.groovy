@@ -43,7 +43,7 @@ def configure() {
     )
     if(chs_devices instanceof Boolean) chs_devices = device_choices.collectEntries { [(it): chs_devices] }
     def devices = chs_devices.findAll{ it.value }.collect {
-        it.key.toString()
+        it.key.toString().replaceAll('any:','').replaceAll('port:','')
     }
 
     def test_matrix = []
