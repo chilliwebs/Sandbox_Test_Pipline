@@ -15,7 +15,8 @@ def configure() {
             [$class: 'BooleanParameterDefinition', defaultValue: false, name: it]
         }
     )
-    if(!chs_os_es instanceof Map) chs_os_es = [chs_os_es:true]
+    echo(chs_os_es)
+    if(chs_os_es instanceof String) chs_os_es = [chs_os_es:true]
     def os_es = chs_os_es.findAll{ it.value }.collect {
         it.key.toString()
     }
