@@ -44,9 +44,9 @@ def configure() {
     }
 
     def test_matrix = []
-    os_es.each(os -> {
-        browsers.each(browser -> {
-            devices.each(device -> {
+    os_es.each({ os -> 
+        browsers.each({ browser -> 
+            devices.each({ device -> 
                 test_matrix.add([os:os, browser:browser, device:device, setup: false])
             })
         })
