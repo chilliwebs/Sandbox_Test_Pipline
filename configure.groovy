@@ -27,6 +27,7 @@ def configure() {
             [$class: 'BooleanParameterDefinition', defaultValue: false, name: it]
         }
     )
+    if(chs_browsers instanceof Boolean) chs_browsers = browser_choices.collectEntries { [(it): chs_browsers] }
     def browsers = chs_browsers.findAll{ it.value }.collect {
         it.key.toString()
     }
@@ -40,6 +41,7 @@ def configure() {
             [$class: 'BooleanParameterDefinition', defaultValue: false, name: it]
         }
     )
+    if(chs_devices instanceof Boolean) chs_devices = device_choices.collectEntries { [(it): chs_devices] }
     def devices = chs_devices.findAll{ it.value }.collect {
         it.key.toString()
     }
@@ -54,6 +56,8 @@ def configure() {
     })
     Collections.shuffle(test_matrix);
 
+    echo('Storing Test Matrix: ')
+    echo(env.test_matrix)
     env.test_matrix = test_matrix
 }
 
