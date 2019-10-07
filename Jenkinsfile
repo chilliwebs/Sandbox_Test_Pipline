@@ -1,3 +1,5 @@
+import java.util.Collections;
+
 pipeline {
   //triggers {
   //  cron('H H/3 * * *')
@@ -93,6 +95,7 @@ pipeline {
             tasks.put(index+"_"+test_conf.os+"_"+test_conf.browser+"_"+test_conf.device, dowork)
           }
 
+          Collections.shuffle(tasks);
           parallel tasks
         }
       }
