@@ -40,7 +40,8 @@ pipeline {
           echo(env.test_matrix)
           def tests = (new groovy.json.JsonSlurper()).parseText(env.test_matrix)
           def tasks = [:]
-          tests.eachWithIndex { test_conf, index ->
+          tests.eachWithIndex { tstcfg, index ->
+            def test_conf = new HashMap<String,Object>(tstcfg)
             def dowork = {
               lock(label:test_conf.device, quantity: 1, variable:'dev') {
                 lock(label:test_conf.os, quantity: 1, variable:'vmid') {
