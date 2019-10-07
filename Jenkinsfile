@@ -36,7 +36,9 @@ pipeline {
     stage('Delegate') {
       steps {
         script {
+          echo('Using Test Matrix: ')
           echo(env.test_matrix)
+          def tasks = [:]
           env.test_matrix.eachWithIndex { test_conf, index ->
             def dowork = {
               lock(label:test_conf.device, quantity: 1, variable:'dev') {
