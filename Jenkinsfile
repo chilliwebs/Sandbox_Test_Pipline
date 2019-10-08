@@ -59,17 +59,15 @@ pipeline {
                     }
                     stage('VM Execution') {
                       if (test_conf.setup == true) {
-                        catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                          timeout(45) {
-                            node(env.vmnod) {
+                        node(env.vmnod) {
+                          catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                            timeout(45) {
                               withEnv(["browser=${test_conf.browser}"]) {
                                 unstash "scripts"
                                 load "vm_exec.groovy"
                               }
                             }
                           }
-                        }
-                        node(env.vmnod) {
                           archiveArtifacts artifacts: '**/*.png'
                         }
                       } else {
