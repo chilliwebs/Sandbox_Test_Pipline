@@ -69,6 +69,9 @@ pipeline {
                             }
                           }
                         }
+                        node(env.vmnod) {
+                          archiveArtifacts artifacts: '**/*.png'
+                        }
                       } else {
                         echo "Skipping execution setup failed"
                       }
