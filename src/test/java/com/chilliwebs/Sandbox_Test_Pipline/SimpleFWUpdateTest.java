@@ -32,9 +32,9 @@ public class SimpleFWUpdateTest {
   private Map<String, Object> vars;
   JavascriptExecutor js;
 
-  String machine;
-  String device;
-  String browser;
+  public static String machine;
+  public static String device;
+  public static String browser;
 
   @Before
   public void setUp() {
