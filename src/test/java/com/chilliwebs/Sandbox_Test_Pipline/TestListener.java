@@ -1,5 +1,6 @@
-import java.io.FileOutputStream;
+package com.chilliwebs.Sandbox_Test_Pipline;
 
+import java.io.FileOutputStream;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
