@@ -30,7 +30,7 @@ public class TestListener extends RunListener {
         System.out.println("Finished: " + description.getMethodName());
 
         if (SimpleFWUpdateTest.driver != null) {
-            FileOutputStream imageFileOutputStream = new FileOutputStream("./"+failure.getDescription().getMethodName()+".png");
+            FileOutputStream imageFileOutputStream = new FileOutputStream("./"+description.getMethodName()+".png");
             imageFileOutputStream.write(((TakesScreenshot) SimpleFWUpdateTest.driver).getScreenshotAs(OutputType.BYTES));
             imageFileOutputStream.flush();
             imageFileOutputStream.close();
@@ -54,18 +54,8 @@ public class TestListener extends RunListener {
         }
     }
 
-    public void testAssumptionFailure(Failure failure) {
+    public void testAssumptionFailure(Failure failure)  {
         System.out.println("Failed: " + failure.getDescription().getMethodName());
-
-        if (SimpleFWUpdateTest.driver != null) {
-            FileOutputStream imageFileOutputStream = new FileOutputStream("./"+failure.getDescription().getMethodName()+".png");
-            imageFileOutputStream.write(((TakesScreenshot) SimpleFWUpdateTest.driver).getScreenshotAs(OutputType.BYTES));
-            imageFileOutputStream.flush();
-            imageFileOutputStream.close();
-            System.out.println("Screenshot taken");
-            SimpleFWUpdateTest.driver.quit();
-            SimpleFWUpdateTest.driver = null;
-        }
     }
 
     public void testIgnored(Description description) throws Exception {
