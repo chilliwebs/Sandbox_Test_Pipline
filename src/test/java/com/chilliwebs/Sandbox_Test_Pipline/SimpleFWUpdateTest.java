@@ -70,12 +70,6 @@ public class SimpleFWUpdateTest {
     }
   }
 
-  @After
-  public void tearDown() {
-    if (driver != null)
-      driver.quit();
-  }
-
   @Test
   public void testSimpleFWUpdate() {
     if (driver != null) {

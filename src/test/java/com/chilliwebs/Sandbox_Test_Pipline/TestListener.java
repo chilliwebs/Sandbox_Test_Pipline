@@ -16,6 +16,10 @@ public class TestListener extends RunListener {
 
     public void testRunFinished(Result result) throws Exception {
         System.out.println("Number of tests executed: " + result.getRunCount());
+        if (SimpleFWUpdateTest.driver != null) {
+            SimpleFWUpdateTest.driver.quit();
+            SimpleFWUpdateTest.driver = null;
+        }
     }
 
     public void testStarted(Description description) throws Exception {
@@ -24,20 +28,44 @@ public class TestListener extends RunListener {
 
     public void testFinished(Description description) throws Exception {
         System.out.println("Finished: " + description.getMethodName());
+
+        if (SimpleFWUpdateTest.driver != null) {
+            FileOutputStream imageFileOutputStream = new FileOutputStream("./"+failure.getDescription().getMethodName()+".png");
+            imageFileOutputStream.write(((TakesScreenshot) SimpleFWUpdateTest.driver).getScreenshotAs(OutputType.BYTES));
+            imageFileOutputStream.flush();
+            imageFileOutputStream.close();
+            System.out.println("Screenshot taken");
+            SimpleFWUpdateTest.driver.quit();
+            SimpleFWUpdateTest.driver = null;
+        }
     }
 
     public void testFailure(Failure failure) throws Exception {
         System.out.println("Failed: " + failure.getDescription().getMethodName());
 
-        // Create refernce of TakesScreenshot
-        FileOutputStream imageFileOutputStream = new FileOutputStream("./"+failure.getDescription().getMethodName()+".png");
-        imageFileOutputStream.write(((TakesScreenshot) SimpleFWUpdateTest.driver).getScreenshotAs(OutputType.BYTES));
-
-        System.out.println("Screenshot taken");
+        if (SimpleFWUpdateTest.driver != null) {
+            FileOutputStream imageFileOutputStream = new FileOutputStream("./"+failure.getDescription().getMethodName()+".png");
+            imageFileOutputStream.write(((TakesScreenshot) SimpleFWUpdateTest.driver).getScreenshotAs(OutputType.BYTES));
+            imageFileOutputStream.flush();
+            imageFileOutputStream.close();
+            System.out.println("Screenshot taken");
+            SimpleFWUpdateTest.driver.quit();
+            SimpleFWUpdateTest.driver = null;
+        }
     }
 
     public void testAssumptionFailure(Failure failure) {
         System.out.println("Failed: " + failure.getDescription().getMethodName());
+
+        if (SimpleFWUpdateTest.driver != null) {
+            FileOutputStream imageFileOutputStream = new FileOutputStream("./"+failure.getDescription().getMethodName()+".png");
+            imageFileOutputStream.write(((TakesScreenshot) SimpleFWUpdateTest.driver).getScreenshotAs(OutputType.BYTES));
+            imageFileOutputStream.flush();
+            imageFileOutputStream.close();
+            System.out.println("Screenshot taken");
+            SimpleFWUpdateTest.driver.quit();
+            SimpleFWUpdateTest.driver = null;
+        }
     }
 
     public void testIgnored(Description description) throws Exception {
