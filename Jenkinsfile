@@ -2,6 +2,9 @@ pipeline {
   parameters {
     string(defaultValue: '[]', description: 'dont change if you wish to run configure step', name: 'test_matrix')
   }
+  options {
+    buildDiscarder(logRotator(daysToKeepStr: '30', numToKeepStr: '10', artifactDaysToKeepStr: '30', artifactNumToKeepStr: '10'))
+  }
   agent none
   stages {
     stage('Configure') {
