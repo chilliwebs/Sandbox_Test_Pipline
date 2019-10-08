@@ -17,7 +17,7 @@ def vm_exec() {
     this.acro.setPortInfo(env.dev.split('-')[0], (env.dev.split('-')[1]).toInteger(), 'ON')
     bat "java -cp target/*;target/dependency/* -Dbrowser=\"${env.browser}\" -Dmachine=\"${machine.name}\" -Ddev=\"${dev.alias}\" org.junit.runner.JUnitCore com.chilliwebs.Sandbox_Test_Pipline.SimpleFWUpdateTest"
 
-    archiveArtifacts artifacts: '**/screenshots/*.png'
+    archiveArtifacts artifacts: '**/*.png'
 
     echo('done!')
 }

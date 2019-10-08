@@ -30,7 +30,7 @@ public class TestListener extends RunListener {
         System.out.println("Failed: " + failure.getDescription().getMethodName());
 
         // Create refernce of TakesScreenshot
-        FileOutputStream imageFileOutputStream = new FileOutputStream("./screenshots/"+failure.getDescription().getMethodName()+".png");
+        FileOutputStream imageFileOutputStream = new FileOutputStream("./"+failure.getDescription().getMethodName()+".png");
         imageFileOutputStream.write(((TakesScreenshot) SimpleFWUpdateTest.driver).getScreenshotAs(OutputType.BYTES));
 
         System.out.println("Screenshot taken");
