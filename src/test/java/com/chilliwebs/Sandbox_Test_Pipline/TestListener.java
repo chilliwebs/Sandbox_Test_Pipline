@@ -42,12 +42,12 @@ public class TestListener extends RunListener {
 
     public void testFinished(Description description) throws Exception {
         System.out.println("Finished: " + description.getMethodName());
-        takeScreenshot(description.getMethodName());
+        takeScreenshot("Finished_"+description.getMethodName());
     }
 
     public void testFailure(Failure failure) throws Exception {
         System.out.println("Failed: " + failure.getDescription().getMethodName());
-        takeScreenshot(failure.getDescription().getMethodName());
+        takeScreenshot("Failed_"+failure.getDescription().getMethodName());
     }
 
     public void testAssumptionFailure(Failure failure)  {
