@@ -67,7 +67,29 @@ public class SimpleFWUpdateTest {
   }
 
   @After
-  public void tearDown() {
+  public void tearDown(ITestResult result) {
+    // Here will compare if test is failing then only it will enter into if condition
+    if(ITestResult.FAILURE==result.getStatus())
+    {
+      try 
+      {
+        // Create refernce of TakesScreenshot
+        TakesScreenshot ts=(TakesScreenshot)driver;
+        
+        // Call method to capture screenshot
+        File source=ts.getScreenshotAs(OutputType.FILE);
+
+        // Copy files to specific location here it will save all screenshot in our project home directory and
+        // result.getName() will return name of test case so that screenshot name will be same
+        FileUtils.copyFile(source, new File("./screenshots/"+result.getName()+".png"));
+        System.out.println("Screenshot taken");
+      } 
+      catch (Exception e)
+      {
+        System.out.println("Exception while taking screenshot "+e.getMessage());
+      }
+    }
+
     if (driver != null)
       driver.quit();
   }
