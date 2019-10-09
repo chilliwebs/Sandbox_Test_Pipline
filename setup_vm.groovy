@@ -21,7 +21,7 @@ def setup_vm() {
     def vmIP = this.vmware.getIpAddr(machine.vmxurl)
     echo("vm ip addr: ${vmIP}")
 
-    def installerURL = "https://downloads.bose.com/ced/boseupdater/windows/BoseUpdaterInstaller_6.0.0.4388.exe"
+    def installerURL = "https://downloads.bose.com/ced/boseupdater/windows/BoseUpdaterInstaller_6.0.0.4454.exe"
     def masterIP = "172.17.0.1" //InetAddress.localHost.hostAddress
     def secret = jenkins.model.Jenkins.getInstance().getComputer(env.vmnod).getJnlpMac()
 
