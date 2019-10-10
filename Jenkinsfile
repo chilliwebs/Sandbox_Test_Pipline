@@ -71,7 +71,7 @@ pipeline {
                               }
                             }
                           }
-                          bat "COPY %TMP%\\BoseUpdater.log .\\${env.vmid}_${env.dev}_${env.browser}_BoseUpdater.log"
+                          bat "COPY %TMP%\\BoseUpdater.log .\\${env.vmid}_${test_conf.device}_${env.dev}_${test_conf.browser}_BoseUpdater.log"
                           archiveArtifacts artifacts: '**/*.png'
                           archiveArtifacts artifacts: '**/*BoseUpdater.log'
                         }
