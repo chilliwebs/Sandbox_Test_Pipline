@@ -3,7 +3,7 @@ pipeline {
     string(defaultValue: '[]', description: 'dont change if you wish to run configure step', name: 'test_matrix')
   }
   options {
-    buildDiscarder(logRotator(daysToKeepStr: '30', numToKeepStr: '10', artifactDaysToKeepStr: '30', artifactNumToKeepStr: '10'))
+    buildDiscarder(logRotator(daysToKeepStr: '30', numToKeepStr: '20', artifactDaysToKeepStr: '30', artifactNumToKeepStr: '20'))
   }
   agent none
   stages {
