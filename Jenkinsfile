@@ -71,7 +71,9 @@ pipeline {
                               }
                             }
                           }
+                          bat "COPY %TMP%\\BoseUpdater.log .\\${env.vmid}_${env.dev}_${env.browser}_BoseUpdater.log"
                           archiveArtifacts artifacts: '**/*.png'
+                          archiveArtifacts artifacts: '**/*BoseUpdater.log'
                         }
                       } else {
                         echo "Skipping execution setup failed"

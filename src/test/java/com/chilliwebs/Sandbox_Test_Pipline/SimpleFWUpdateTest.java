@@ -156,6 +156,13 @@ public class SimpleFWUpdateTest {
         fail("Error message is displayed");
       } else if (driver.findElement(By.id("device_updatecompletesuccess")).isDisplayed()) {
         assertThat(driver.findElement(By.id("device_update_progress")).getText(), is("100%"));
+      } else if(driver.findElement(By.id("install_needinstall")).isDisplayed()) {
+        try {
+          Thread.sleep(600000); // 10 min
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
+        assertTrue(driver.findElement(By.id("device_updatenow")).isDisplayed());
       } else {
         assertTrue(driver.findElement(By.id("device_updatenow")).isDisplayed());
       }
