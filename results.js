@@ -9,7 +9,6 @@ function msToTime(duration) {
 function loadReport() {
     console.log('loading json data...');
     $.getJSON("../api/json", function (data) {
-        console.log(data);
         $('#buildInfo').addClass(data.result);
         $('.fullDisplayName').html(data.fullDisplayName);
         $('.result').html(data.result);
@@ -159,7 +158,8 @@ function loadReport() {
                     url: test_log.fileName,
                     success: function(log) {
                         log.split(/\n(?=\d)/).forEach(function(line) {
-                            var arr = line.split(/(?<=^[^ ]+) /);
+                            //var arr = line.split(/(?:<=^[^ ]+) /);
+                            var arr = [line.substr(0,line.indexOf(' ')), line.substr(line.indexOf(' ')+1)];
                             var dte = arr[0].split('-');
                             logs.push(dte[1]+'/'+dte[2]+'/'+dte[0]+ " " + arr[1]);
                         });
@@ -174,7 +174,8 @@ function loadReport() {
                     url: bose_log.fileName,
                     success: function(log) {
                         log.split(/\n(?=\d)/).forEach(function(line){
-                            var arr = line.split(/(?<=^[^ ]+) /);
+                            //var arr = line.split(/(?:<=^[^ ]+) /);
+                            var arr = [line.substr(0,line.indexOf(' ')), line.substr(line.indexOf(' ')+1)];
                             logs.push(arr[0] + " " + arr[1]);
                         });
                     }
