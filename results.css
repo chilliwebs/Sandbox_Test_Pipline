@@ -1,0 +1,246 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 12px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#buildInfo {
+    padding: 0.25em;
+    background-color: #bbb;
+}
+
+#buildInfo.FAILURE {
+    background-color: #ff6666;
+    border: 1px solid #b00;
+}
+
+#buildInfo.SUCCESS {
+    background-color: #66ff66;
+    border: 1px solid #0b0;
+}
+
+#buildHeader {
+    font-size: 1.5em;
+}
+
+#buildLbl, #buildLbl .fullDisplayName, 
+#buildStatus, #buildStatus .result, 
+#buildDate, #buildDate .datetime, 
+#buildDuration, #buildDuration .duration {
+    display: inline;
+}
+
+#buildLbl .fullDisplayName, 
+#buildStatus .result, 
+#buildDate .datetime, 
+#buildDuration .duration {
+    padding: 0 0.25em;
+}
+
+#buildStatus, #buildDuration  {
+    float: right;
+}
+
+.parsing_error {
+    padding: 1em;
+    font-size: 2em;
+}
+
+#results, #detail {
+    padding: 1em;
+}
+
+.tests_tbl {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #667;
+}
+
+.tests_tbl th {
+    background-color: #aab;
+    border-bottom: 1px solid #667;
+    font-size: 1.125em;
+}
+
+.tests_tbl tr:nth-child(4n) {
+    background-color: #dde;
+}
+
+.tests_tbl tr:hover > td {
+    cursor: pointer;
+    background-color: #eef;
+}
+
+.tests_tbl tr.selected, .tests_tbl tr.selected:hover > td {
+    background-color: #fff;
+}
+
+.tests_tbl tr.FAILED.selected td, .tests_tbl tr.FAILED.selected:hover > td {
+    background-color: #fdd;
+}
+
+.tests_tbl tr.PASSED.selected td, .tests_tbl tr.PASSED.selected:hover > td {
+    background-color: #efe;
+}
+
+.tests_tbl tr.ERROR.selected td, .tests_tbl tr.ERROR.selected:hover > td {
+    background-color: #ffd;
+}
+
+.tests_tbl tr.results_row.selected {
+    border-top: 1px solid #445;
+}
+
+.tests_tbl tr.detail_row.selected {
+    border-bottom: 1px solid #445;
+}
+
+.tests_tbl tr.results_row th, .tests_tbl tr.results_row td {
+    padding: 0.125em;
+}
+
+.tests_tbl tr:not(:first-child) td:not(:first-child) {
+    border-left: 1px solid #445;
+}
+
+.tests_tbl tr.selected td:not(:first-child) {
+    border-left: 0;
+}
+
+.tests_tbl tr.results_row td.FAILED {
+    color: #aa0000;
+}
+
+.tests_tbl tr.results_row td.PASSED {
+    color: #00aa00;
+}
+
+.tests_tbl tr.results_row td.SKIPPED {
+    color: #555;
+}
+
+.tests_tbl tr.results_row td.ERROR {
+    color: #dd5500;
+}
+
+.detail_tbl {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #677;
+}
+
+.detail_tbl th {
+    background-color: #abb;
+    border-bottom: 1px solid #677;
+    font-size: 1.125em;
+}
+
+.FAILED .detail_tbl {
+    border: 1px solid #766;
+}
+
+.FAILED .detail_tbl th {
+    background-color: #daa;
+    border-bottom: 1px solid #766;
+}
+
+.PASSED .detail_tbl {
+    border: 1px solid #676;
+}
+
+.PASSED .detail_tbl th {
+    background-color: #bdb;
+    border-bottom: 1px solid #676;
+}
+
+.tests_tbl tr td .detail_tbl tr.FAIL td,
+.tests_tbl tr.FAILED td .detail_tbl tr.FAIL td,
+.tests_tbl tr.PASSED td .detail_tbl tr.FAIL td,
+.tests_tbl tr.ERROR td .detail_tbl tr.FAIL td {
+    background-color: #fcc;
+}
+
+.tests_tbl tr td .detail_tbl tr.PASS td,
+.tests_tbl tr.FAILED td .detail_tbl tr.PASS td,
+.tests_tbl tr.PASSED td .detail_tbl tr.PASS td,
+.tests_tbl tr.ERROR td .detail_tbl tr.PASS td {
+    background-color: #cfc;
+}
+
+.tests_tbl tr td .detail_tbl tr.config,
+.tests_tbl tr.FAILED td .detail_tbl tr.config,
+.tests_tbl tr.PASSED td .detail_tbl tr.config,
+.tests_tbl tr.ERROR td .detail_tbl tr.config {
+    opacity: 0.3;
+}
+
+.sub_detail_row .reporter-output, .sub_detail_row .exception {
+    white-space: pre;
+    padding: 1em;
+}
+
+.detail_row #detail, .sub_detail_row #sub_detail {
+    display: none;
+}
+
+.detail_tbl tr.detail_results_row th, .detail_tbl tr.detail_results_row td {
+    padding: 0.125em;
+}
+
+.detail_tbl tr.detail_results_row.selected td {
+    background-color: #fff !important;
+}
+
+.detail_tbl tr.sub_detail_row.selected td {
+    background-color: #fff !important;
+}
+
+.detail_tbl tr.detail_results_row.selected {
+    border-top: 1px solid #445;
+    opacity: 1.0 !important;
+}
+
+.detail_tbl tr.sub_detail_row.selected td {
+    border-bottom: 1px solid #445;
+    opacity: 1.0 !important;
+}
+
+#screenshots {
+    overflow-x: scroll;
+    width: calc(100vw - 4em);
+    background-color: #fff;
+    border: 1px solid #667;
+    margin-top: 1em;
+}
+
+#screenshot_wrapper {
+    float: left;
+    width: max-content;
+}
+
+#screenshot_wrapper .screenshot {
+    display: inline-block;
+    border: 1px solid #667;
+    margin: 0.5em 0.5em 0.5em 0;
+    height: auto;
+}
+
+.screenshot_name {
+    padding: 0.25em;
+}
+
+#screenshot_wrapper .screenshot:first-child {
+    margin-left: 0.5em;
+}
+
+#logs {
+    white-space: pre;
+    overflow-y: scroll;
+    max-height: 300px;
+    width: calc(100vw - 4em);
+    background-color: #fff;
+    border: 1px solid #667;
+    margin-top: 1em;
+}
